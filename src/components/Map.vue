@@ -1,27 +1,61 @@
 <template>
   <div class="map-section">
-    <div class="map-sub-parent">
-      <svg class="map" height="500" width="500">
-        <g style="transform: scale(2.5)">
-          <g class="map-hexes">
-            <g transform="translate(0,0)">
-              <polygon points="100,0 50,87 -50,87 -100,0 -50,-87 50,-87"></polygon>
-              <g class="tile"></g>
-            </g>
-            <g>
-              <polygon points="100,0 0,0 100,100, 0,100" fill="white"></polygon>
-            </g>
-          </g>
+      <svg class="map" height="5000" width="3000">
+        <g style="transform: scale(0.5)" v-for="hex in hexes" :key="hex">
+          <Hex v-bind:x="hex.x" v-bind:y="hex.y"></Hex>
         </g>
 
       </svg>
-    </div>
+
   </div>
 </template>
 
 <script>
+import Hex from "@/components/Hex"
+
 export default {
-  name: "Map"
+  name: "Map",
+  components: {
+    Hex
+  }, data () {return {
+      hexes: [
+      ]}
+  },
+  methods: {
+    /* Make Columns
+    *  Input: Number (int), y_in (int)
+    *  Output: None
+    *  Description: This function uses a for loop to generate multiple elements for the Hexes list. i is the iterator
+    *   k is the y value modifier. Each row needs to be 87 pixels away from the last, and thus k multiples the y_in
+    *   variable by 87 to produce the position for the desired row.
+    * */
+    makeColumns(num, y_in) {
+      let i;
+      let k = 87 * y_in;
+      for (i = 0; i < num; i++) {
+        let j = i * 300;
+        this.hexes.push({x:j, y:k})
+      }
+    },
+    makeOddColumns(num, y_in) {
+      let i;
+      let k = 87 * y_in;
+      for (i = 0; i < num; i++) {
+        let j = i * 300 + 150;
+        this.hexes.push({x:j, y:k})
+      }
+    }
+  },
+  beforeMount() {
+    let rows = 20;
+    let i;
+
+    for (i = 0; i < rows; i+=2) {
+      this.makeColumns(9, i);
+      this.makeOddColumns(8, i+1);
+    }
+  }
+
 }
 </script>
 
@@ -32,13 +66,10 @@ export default {
   width: max-content;
 }
 
-.map-section .map-sub-parent {
-  margin-top: 5vh;
+.map-section .map {
   overflow: auto;
   position: relative;
 }
 
-.map-section .map-hexes {
-  transform: scale(0.5);
-}
+
 </style>

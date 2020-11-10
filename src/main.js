@@ -8,6 +8,7 @@ import Map from '@/components/Map'
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
+
 const routes= [
     { path: '/NewGame', component: NewGame },
     { path: '/Map', component: Map},
