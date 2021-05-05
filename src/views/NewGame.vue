@@ -43,7 +43,7 @@
       </select>
     </div>
 
-    <button @click="toMap">TEST</button>
+    <button @click="$router.push('Map')">TEST</button>
   </div>
 
 </template>
@@ -57,11 +57,6 @@ export default {
       player2_name: '',
       p1_side: '',
       p2_side: ''
-    }
-  },
-  methods: {
-    toMap() {
-      this.$router.push('/Map')
     }
   }
 }

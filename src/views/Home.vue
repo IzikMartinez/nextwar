@@ -1,25 +1,21 @@
 <template>
     <div class="game-select">
-      <button class="india-button" @click="goNewGame"></button>
+      <button class="india-button" @click="$router.push('NewGame')"></button>
       <button class="taiwan-button"></button>
     </div>
 </template>
 
 <script>
 export default {
-name: "Select-Game",
-  methods: {
-    goNewGame() {
-      this.$router.replace('/NewGame')
-    }
-  }
+  name: "Select-Game"
 }
 </script>
 
 <style scoped>
 
 .game-select {
-  margin-top: 30px;
+  margin: auto;
+
 }
 
 
