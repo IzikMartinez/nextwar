@@ -1,26 +1,23 @@
 <template>
-    <div class="game-select">
-      <button class="india-button" @click="$router.push('NewGame')"></button>
-      <button class="taiwan-button"></button>
-    </div>
+  <div class="game-select">
+<!--    <button class="india-button" @click="$router.push('NewGame')"></button>-->
+<!--    <button class="taiwan-button"></button>-->
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Select-Game"
-}
+  name: "Select-Game",
+};
 </script>
 
 <style scoped>
-
 .game-select {
   margin: auto;
-
 }
 
-
 .game-select .india-button {
-  width: calc(768px/ 4);
+  width: calc(768px / 4);
   height: calc(1366px / 4);
 
   background: url("../assets/In-Pak.svg");
@@ -34,13 +31,12 @@ export default {
   margin-right: 20px;
 }
 
-
 .game-select .india-button:hover {
   filter: none;
 }
 
 .game-select .taiwan-button {
-  width: calc(768px/ 4);
+  width: calc(768px / 4);
   height: calc(1366px / 4);
 
   background: url("../assets/Taiwan.svg");
@@ -57,9 +53,8 @@ export default {
   filter: none;
 }
 
-
 .game-select .NW-button {
-  width: calc(768px/ 4);
+  width: calc(768px / 4);
   height: calc(1366px / 4);
 
   background: url("../assets/back.jpg");
