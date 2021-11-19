@@ -1,7 +1,26 @@
 <template>
   <div class="game-select">
-<!--    <button class="india-button" @click="$router.push('NewGame')"></button>-->
-<!--    <button class="taiwan-button"></button>-->
+    <h1>Next War</h1>
+    <button
+      class="inpak"
+      @click="$router.push({ name: 'Map', params: { id: 1 } })"
+    />
+    <button
+      class="taiwan"
+      @click="$router.push({ name: 'Map', params: { id: 2 } })"
+    />
+    <button
+      class="korea"
+      @click="$router.push({ name: 'Map', params: { id: 3 } })"
+    />
+    <button
+      class="poland"
+      @click="$router.push({ name: 'Map', params: { id: 4 } })"
+    />
+    <button
+      class="vietnam"
+      @click="$router.push({ name: 'Map', params: { id: 5 } })"
+    />
   </div>
 </template>
 
@@ -11,63 +30,55 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$wi: calc(768px / 4);
+$hi: calc(1366px / 4);
+
+@mixin game-btn {
+  width: $wi;
+  height: $hi;
+  background-size: $wi $hi;
+  /* MARGIN */
+  margin-top: 5rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  /* APPEARANCE */
+  outline: none;
+  appearance: none;
+  border-radius: 1rem;
+  filter: grayscale(100);
+  &:hover {
+    filter: none;
+  }
+}
+
 .game-select {
   margin: auto;
-}
-
-.game-select .india-button {
-  width: calc(768px / 4);
-  height: calc(1366px / 4);
-
-  background: url("../assets/In-Pak.svg");
-  background-size: calc(768px / 4) calc(1366px / 4);
-
-  /*BUTTON APPEARANCE*/
-  outline: none;
-  appearance: none;
-  border-radius: 10px;
-  filter: grayscale(100);
-  margin-right: 20px;
-}
-
-.game-select .india-button:hover {
-  filter: none;
-}
-
-.game-select .taiwan-button {
-  width: calc(768px / 4);
-  height: calc(1366px / 4);
-
-  background: url("../assets/Taiwan.svg");
-  background-size: calc(768px / 4) calc(1366px / 4);
-
-  /*BUTTON APPEARANCE*/
-  outline: none;
-  appearance: none;
-  border-radius: 10px;
-  filter: grayscale(100);
-}
-
-.game-select .taiwan-button:hover {
-  filter: none;
-}
-
-.game-select .NW-button {
-  width: calc(768px / 4);
-  height: calc(1366px / 4);
-
-  background: url("../assets/back.jpg");
-  background-size: calc(768px / 4) calc(1366px / 4);
-
-  /*BUTTON APPEARANCE*/
-  outline: none;
-  appearance: none;
-  border-radius: 10px;
-  filter: grayscale(100);
-}
-
-.game-select .NW-button:hover {
-  filter: none;
+  text-align: center;
+  h1 {
+    font-family: Impact, sans-serif;
+    font-size: 4rem;
+    color: white;
+  }
+  .inpak {
+    @include game-btn;
+    background: url("../assets/In-Pak.svg");
+  }
+  .taiwan {
+    @include game-btn;
+    background: url("../assets/Taiwan.svg");
+  }
+  .korea {
+    @include game-btn;
+    background: url("../assets/Taiwan.svg");
+  }
+  .poland {
+    @include game-btn;
+    background: url("../assets/Taiwan.svg");
+  }
+  .vietnam {
+    @include game-btn;
+    background: url("../assets/Taiwan.svg");
+  }
 }
 </style>

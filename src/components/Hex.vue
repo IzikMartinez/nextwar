@@ -1,47 +1,33 @@
 <template>
   <svg class="map-hexes">
-    <g transform="translate(0,0)">
-      <polygon :style="cssVars" points="100,0 50,87 100,174 200,174 250,87 200,0"></polygon>
+    <g class="hex">
+      <polygon points="100,0 50,87 100,174 200,174 250,87 200,0"></polygon>
     </g>
   </svg>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: "Hex",
-  data () {
-    return {
-      col_in: 0,
-      row_in: 0,
-      foot: 1,
-      motor: 1,
-      mechanized: 1
-    }
+  setup(props) {
+    return {};
   },
-  props: {
-    hexColor: {
-      type: String,
-      default: "white"
-    }
-  },
-  computed: {
-    cssVars() {
-      return {
-        '--hex-color': this.hexColor,
-        '--stroke': 'black',
-      }
-    }
-  }
-}
+});
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
 polygon {
-  fill: var(--hex-color);
-  stroke: var(--stroke);
+  fill: white;
+  stroke: black;
+  stroke-width: 2px;
+  &:hover {
+    fill: bisque;
+  }
 }
 
-
+.hex {
+  transform: translate(var(--x), var(--y));
+}
 </style>

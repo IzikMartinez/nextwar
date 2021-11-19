@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 596.28 596.28">
+    <defs>
+    <style lang="scss">
+        .faction-color-main {
+            fill: #00401a;
+        }
+
+        .faction-color-main, .cls-3, .Amethyst, .unit-color, .cls-6 {
+            stroke: #231f20;
+            stroke-miterlimit: 10;
+        }
+
+        .faction-color-secondary {
+            fill: #788d6e;
+        }
+
+        .cls-3 {
+            fill: #231f20;
+        }
+
+        .Amethyst {
+            fill: #96c;
+        }
+
+        .unit-color {
+            fill: coral;
+        }
+
+        .cls-6 {
+            fill: none;
+            stroke-width: 10px;
+        }
+
+        .cls-7 {
+            font-size: 163.87px;
+            letter-spacing: 0.05em;
+        }
+
+        .stacking-limit, .elite-rating, .formation, .unit-id, .cls-15, .cls-7, .cls-8 {
+            fill: #fff;
+        }
+
+        .formation, .cls-7 {
+            font-family: IBMPlexSerif-Bold, IBM Plex Serif, 'monospace';
+        }
+
+        .stacking-limit, .elite-rating, .formation, .cls-7 {
+            font-weight: 700;
+        }
+
+        .cls-8 {
+            font-size: 164.88px;
+            font-family: JetBrainsMono-ExtraBold, JetBrains Mono, 'monospace';
+        }
+
+        .cls-16, .cls-8 {
+            font-weight: 800;
+        }
+
+        .cls-16, .cls-9 {
+            fill: #404041;
+        }
+
+        .stacking-limit {
+            font-size: 105.15px;
+        }
+
+        .stacking-limit, .elite-rating {
+            font-family: CrimsonText-Bold, Crimson Text, 'monospace';
+        }
+
+        .cls-11 {
+            fill: #3d3d3d;
+        }
+
+        .elite-rating {
+            font-size: 102.21px;
+        }
+
+        .formation {
+            font-size: 84.91px;
+        }
+
+        .unit-id {
+            font-size: 90px;
+            font-family: Impact, 'monospace';
+        }
+
+        .start-pos {
+            font-size: 49.54px;
+            font-family: Iosevka-Heavy, Iosevka, 'monospace';
+        }
+    </style>
+    </defs>
+    <g id="Pakistan">
+        <rect class="faction-color-main" x="0.5" y="0.5" width="595.28" height="595.28"/>
+        <rect class="faction-color-secondary" x="0.5" y="213.13" width="595.28" height="113.33"/>
+    </g>
+    <g id="Corps_Color" data-name="Corps Color">
+        <rect class="cls-3" x="161.78" y="181.92" width="269.29" height="192.76" rx="19.84"/>
+        <path id="Coral" class="unit-color" d="M183.74,196.75H409.1a8.5,8.5,0,0,1,8.5,8.5V350.34a9.51,9.51,0,0,1-9.51,9.51H183.74a8.5,8.5,0,0,1-8.5-8.5V205.25A8.5,8.5,0,0,1,183.74,196.75Z"/>
+    </g>
+    <g id="Infantry">
+        <line class="cls-6" x1="175.24" y1="196.75" x2="417.6" y2="359.85"/>
+        <line class="cls-6" x1="421.04" y1="196.75" x2="175.24" y2="359.85"/>
+    </g>
+    <g id="S-S">
+        <text class="cls-7" transform="translate(80.41 542.03) rotate(0.46) scale(0.94 1)">6-9</text>
+    </g>
+    <g id="Foot">
+        <text id="_4_S" data-name="4 S" class="cls-8" transform="translate(430.63 545.21) scale(0.84 1)">4</text>
+    </g>
+    <g id="Stacking">
+        <circle class="cls-9" cx="83.41" cy="269.8" r="56.67"/>
+        <text class="stacking-limit" transform="translate(58.22 298.97) scale(1.07 1)">2</text>
+    </g>
+    <g id="ER">
+        <polygon class="cls-11" points="456.19 238.44 510.49 207.09 564.79 238.44 564.79 301.14 510.49 332.49 456.19 301.14 456.19 238.44"/>
+        <text id="_5" data-name="5" class="elite-rating" transform="translate(486.53 298.97) scale(1.11 1)">5</text>
+    </g>
+    <g id="Formation">
+        <text id="XX" class="formation" transform="translate(228.39 177.48) scale(1.1 1)">XX</text>
+    </g>
+    <g id="Unit_ID" data-name="Unit ID">
+        <text class="unit-id" transform="translate(25.99 105.34)">7/XI</text>
+    </g>
+    <g id="Start_Pos" data-name="Start Pos">
+    <rect class="cls-15" x="447.11" y="32.65" width="124.72" height="56.69" rx="14.17"/>
+    <text class="start-pos" transform="translate(461.4 78.46) scale(0.97 1)">3500</text>
+    </g>
+</svg>
