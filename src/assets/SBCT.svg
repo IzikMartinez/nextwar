@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.28 595.28">
   <defs>
     <style>
-      .cls-1 {
+      .stripe-USA {
         fill: #6f7328;
       }
 
-      .cls-2 {
+      .main-color-USA {
         fill: #a4a966;
       }
 
@@ -47,7 +47,7 @@
         font-family: CrimsonText-Bold, Crimson Text;
       }
 
-      .cls-9 {
+      .mechanized-ma {
         font-size: 164.88px;
         fill: #ec1c24;
         font-family: JetBrainsMono-ExtraBold, JetBrains Mono;

@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "Map",
     component: () => import("@/views/Map.vue"),
   },
+  {
+    path: "/counter/:id",
+    name: "Counter",
+    component: () => import("@/components/Counter.vue"),
+  },
 ];
 
 const router = createRouter({

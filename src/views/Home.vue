@@ -22,11 +22,60 @@
       @click="$router.push({ name: 'Map', params: { id: 5 } })"
     />
   </div>
+
+  <div class="grid-container">
+    <counter
+      class="counter"
+      unit_name="1 SBCT"
+      unit_type="SBCT"
+      country="USA"
+      unit_size="brigade"
+      formation_id="XXV"
+    ></counter>
+    <counter
+      class="counter"
+      unit_name="2 HCAB"
+      unit_type="HCAB"
+      country="PRC"
+      unit_size="brigade"
+      formation_id="I"
+    ></counter>
+    <counter
+      class="counter"
+      unit_name="3 MCAB"
+      unit_type="MCAB"
+      country="PRC"
+      unit_size="brigade"
+    ></counter>
+    <counter
+      class="counter"
+      unit_name="1 BCT"
+      country="USA"
+      unit_size="brigade"
+      formation_id="10-mtn"
+    ></counter>
+    <counter
+      class="counter"
+      unit_name="2 BCT"
+      country="USA"
+      unit_size="brigade"
+      formation_id="101-abn"
+    ></counter>
+    <counter
+      class="counter"
+      unit_name="3 BCT"
+      country="USA"
+      unit_size="brigade"
+      formation_id="82-abn"
+    ></counter>
+  </div>
 </template>
 
 <script>
+import counter from "../components/Counter";
 export default {
   name: "Select-Game",
+  components: { counter },
 };
 </script>
 
@@ -80,5 +129,18 @@ $hi: calc(1366px / 4);
     @include game-btn;
     background: url("../assets/Taiwan.svg");
   }
+}
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-template-columns: auto auto auto;
+  padding: 2px;
+}
+
+.grid-container .counter {
+  transform: scale(0.4);
+  margin: 0;
+  padding: 0;
 }
 </style>

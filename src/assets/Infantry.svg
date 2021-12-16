@@ -5,7 +5,7 @@
             fill: #00401a;
         }
 
-        .faction-color-main, .cls-3, .Amethyst, .unit-color, .cls-6 {
+        .faction-color-main, .cls-3, .Amethyst, .formation-color, .cls-6 {
             stroke: #231f20;
             stroke-miterlimit: 10;
         }
@@ -22,7 +22,7 @@
             fill: #96c;
         }
 
-        .unit-color {
+        .formation-color {
             fill: coral;
         }
 
@@ -57,7 +57,7 @@
             font-weight: 800;
         }
 
-        .cls-16, .cls-9 {
+        .cls-16, .mechanized-ma {
             fill: #404041;
         }
 
