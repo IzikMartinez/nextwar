@@ -1,10 +1,9 @@
 <template>
   <div class="map-section">
-    <img class="counter-img" src="../assets/SBCT.svg" alt="stryker" />
-    <svg class="map" height="5000" width="3000">
+    <svg class="map" height="1000" width="2000">
       <template v-for="{ index, x, y } in hexState.hexes" :key="index">
         <g class="hexen" >
-          <hex v-bind:x="x" v-bind:y="y" @click="clickLog(x, y)" />
+          <hex v-bind:x="x" v-bind:y="y" @click="clickLog(x, y)" terrain="clear"/>
         </g>
       </template>
     </svg>
@@ -77,10 +76,8 @@ export default defineComponent({
 .map-section {
   max-width: 100%;
   width: max-content;
-  position: relative;
   .map {
     overflow: auto;
-    position: absolute;
   }
 }
 
