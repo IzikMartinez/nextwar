@@ -8,12 +8,9 @@ const store = createStore({
       y: 0,
     },
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  mutations: {},
+  actions: {},
+  modules: {},
 });
 
 export default store;
