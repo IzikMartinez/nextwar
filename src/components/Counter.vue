@@ -72,6 +72,40 @@
             />
           </g>
         </template>
+        <template v-else-if="$props.country === 'ROK'">
+          <g transform="scale(4) translate(120 23)">
+            <g transform="rotate(-56.3099325) ">
+              <!--arctan(-3/2)-->
+              <g id="b2">
+                <path id="b" d="M-6-26H6v2H-6zm0 3H6v2H-6zm0 3H6v2H-6z" />
+                <use xlink:href="#b" y="44" />
+              </g>
+              <path stroke="#fff" d="M0,17v10" />
+              <path fill="#cd2e3a" d="M0-12A12 12 0 0 1 0 12z" />
+              <path fill="#0047a0" d="M0-12A12 12 0 0 0 0 12 6 6 0 0 0 0 0z" />
+              <circle cy="-6" fill="#cd2e3a" r="6" />
+            </g>
+            <g transform="rotate(-123.6900675)">
+              <use xlink:href="#b2" />
+              <path stroke="#fff" d="M0-23.5v3M0,17v3.5M0,23.5v3" />
+            </g>
+          </g>
+        </template>
+        <template v-else-if="country === 'DPRK'">
+          <g transform="scale(9 9) translate(30 -7)">
+            <circle fill="#fff" cx="24" cy="18" r="8"/>
+            <g id="star" transform="translate(24,18) scale(7.75)" fill="#ED1C27">
+              <g id="cone">
+                <polygon id="triangle" points="0,0 0,1 .5,1" transform="translate(0,-1) rotate(18)"/>
+                <use xlink:href="#triangle" transform="scale(-1,1)" id="use12"/>
+              </g>
+              <use xlink:href="#cone" transform="rotate(72)" id="use14"/>
+              <use xlink:href="#cone" transform="rotate(-72)" id="use16"/>
+              <use xlink:href="#cone" transform="rotate(144)" id="use18"/>
+              <use xlink:href="#cone" transform="rotate(-144)" id="use20"/>
+            </g>
+          </g>
+        </template>
         <rect
           id="black box"
           v-bind:class="attributes.symbol_color"
@@ -100,7 +134,13 @@
           />
         </g>
       </template>
-      <template v-if="$props.unit_type === 'SBCT' || unit_type === 'MCAB'">
+      <template
+        v-if="
+          $props.unit_type === 'SBCT' ||
+          unit_type === 'MCAB' ||
+          unit_type === 'LCAB'
+        "
+      >
         <g id="wheeled_armor_symbol">
           <path
             v-bind:class="attributes.symbol_color"
@@ -120,6 +160,7 @@
           <path
             id="Small_Armor_symbol"
             data-name="Small Armor"
+            v-if="unit_type === 'SBCT' || unit_type === 'MCAB'"
             v-bind:class="attributes.symbol_color"
             d="M337.7,228.19H257.58c-28.74,0-52.07,20.62-52.07,46.06v7.09c0,25.44,23.33,46.06,52.07,46.06H337.7c28.76,0,52.06-20.62,52.06-46.06v-7.09C389.76,248.81,366.46,228.19,337.7,228.19Zm41.38,52.52c0,21-20.6,37.94-46,37.94H262.23c-25.41,0-46-17-46-37.94v-5.83c0-21,20.63-37.94,46-37.94h70.82c25.43,0,46,17,46,37.94Z"
             transform="translate(0)"
@@ -197,25 +238,25 @@
         <template v-if="unit_size === 'brigade'">
           <text
             id="X"
-            class="formation"
+            v-bind:class="attributes.formation_color"
             transform="translate(260 177) scale(1.1 1)"
           >
             X
           </text>
         </template>
-        <template v-if="unit_size === 'division'">
+        <template v-else-if="unit_size === 'division'">
           <text
             id="XX"
-            class="formation"
+            v-bind:class="attributes.formation_color"
             transform="translate(230 177) scale(1.1 1)"
           >
             XX
           </text>
         </template>
-        <template v-if="unit_size === 'corps'">
+        <template v-else-if="unit_size === 'corps'">
           <text
             id="XXX"
-            class="formation"
+            v-bind:class="attributes.formation_color"
             transform="translate(200 177) scale(1.1 1)"
           >
             XXX
@@ -224,81 +265,89 @@
       </g>
 
       <g id="Unit_ID" data-name="Unit ID">
-        <text class="unit-id" transform="translate(27.2 104.83)">
+        <text v-bind:class="attributes.unit_id_color" transform="translate(27.2 104.83)">
           {{ props.unit_name }}
         </text>
       </g>
-      <g id="Defense" data-name="Defense">
-        <path
-          id="shield"
-          class="shield"
-          d="M362.83,405.91v76.88c0,.63,0,1.24,0,1.86-.81,42.78-29.69,77.15-65.16,77.15s-64.37-34.37-65.19-77.15c0-.62,0-1.23,0-1.86V405.91c1.76,6.85,15.67,12.19,32.59,12.19s30.86-5.35,32.61-12.21c1.73,6.86,15.66,12.21,32.59,12.21S361.08,412.76,362.83,405.91Z"
-          transform="translate(0)"
-        />
-        <g id="_3" data-name="3">
-          <text id="_3-2" data-name="3" class="defense">
-            {{ stats.defense }}
+      <g id="Stats" class="text-color">
+        <g id="Attack" data-name="Attack">
+          <text
+            id="_3-2"
+            data-name="3"
+            v-bind:class="attributes.stats_color"
+            transform="translate(81.62 538.96)"
+          >
+            {{ stats.attack }}
           </text>
+        </g>
+        <g id="Defense" data-name="Defense">
+          <path
+            id="shield"
+            class="shield"
+            d="M362.83,405.91v76.88c0,.63,0,1.24,0,1.86-.81,42.78-29.69,77.15-65.16,77.15s-64.37-34.37-65.19-77.15c0-.62,0-1.23,0-1.86V405.91c1.76,6.85,15.67,12.19,32.59,12.19s30.86-5.35,32.61-12.21c1.73,6.86,15.66,12.21,32.59,12.21S361.08,412.76,362.83,405.91Z"
+            transform="translate(0)"
           />
+          <g id="_3" data-name="3">
+            <text id="_3-2" data-name="3" class="defense">
+              {{ stats.defense }}
+            </text>
+            />
+          </g>
+        </g>
+        <g id="Mechanized_D">
+          <rect
+            id="mechanized_movement"
+            v-if="
+              attributes.movement_type === 'mechanized' ||
+              attributes.movement_type === 'light'
+            "
+            v-bind:class="attributes.movement_background_color"
+            x="430"
+            y="410"
+            width="110"
+            height="150"
+            rx="14"
+          />
+          <circle
+            v-if="attributes.movement_type === 'wheeled'"
+            class="charcoal"
+            cx="485"
+            cy="490"
+            r="85"
+          />
+          <text
+            id="_8"
+            data-name="8"
+            v-bind:class="attributes.movement_color"
+            transform="translate(445 550) scale(0.84 1)"
+          >
+            {{ stats.movement }}
+          </text>
+        </g>
+        <g id="ER" data-name="ER" transform="translate(10 10)">
+          <polygon
+            class="charcoal"
+            points="453.54 269.29 518.74 191.34 583.94 269.29 518.74 347.24 453.54 269.29"
+          />
+          <text
+            id="_6"
+            data-name="6"
+            v-bind:class="attributes.small_text_color"
+            transform="translate(490 310)"
+          >
+            {{ stats.efficiency_rating }}
+          </text>
+        </g>
+        <g id="Stacking">
+          <circle class="charcoal" cx="80" cy="280" r="60" />
+          <text
+            v-bind:class="attributes.small_text_color"
+            transform="translate(55 318)"
+          >
+            {{ stats.stacking_value }}
+          </text>
         </g>
       </g>
-      <g id="Attack" data-name="Attack">
-        <text
-          id="_3-2"
-          data-name="3"
-          class="cls-5"
-          transform="translate(81.62 538.96) rotate(0.46) scale(0.94 1)"
-        >
-          {{ stats.attack }}
-        </text>
-      </g>
-
-      <g id="Mechanized_D">
-        <rect
-          id="mechanized_movement"
-          v-if="
-            attributes.movement_type === 'mechanized' ||
-            attributes.movement_type === 'light'
-          "
-          v-bind:class="attributes.movement_background_color"
-          x="430"
-          y="410"
-          width="110"
-          height="150"
-          rx="14"
-        />
-        <circle
-          v-if="attributes.movement_type === 'wheeled'"
-          class="charcoal"
-          cx="485"
-          cy="490"
-          r="85"
-        />
-        <text
-          id="_8"
-          data-name="8"
-          v-bind:class="attributes.movement_color"
-          transform="translate(445 550) scale(0.84 1)"
-        >
-          {{ stats.movement }}
-        </text>
-      </g>
-    </g>
-
-    <g id="ER" data-name="ER" transform="translate(10 10)">
-      <polygon
-        class="cls-6"
-        points="453.54 269.29 518.74 191.34 583.94 269.29 518.74 347.24 453.54 269.29"
-      />
-      <text id="_6" data-name="6" class="er">
-        {{ stats.efficiency_rating }}
-      </text>
-    </g>
-    <g id="Stacking">
-      <circle class="cls-6" cx="80" cy="280" r="60" />
-      <text class="cls-15" transform="translate(55 310) scale(1 1)">
-        {{ stats.stacking_value }}
-      </text>
     </g>
   </svg>
 </template>
@@ -330,6 +379,10 @@ export default defineComponent({
       main_color: String,
       stripe_color: String,
       color: "cls-14",
+      unit_id_color: "unit-id-white",
+      formation_color: "formation",
+      stats_color: "white",
+      small_text_color: "small-white",
       symbol_color: "black",
       movement_color: "white",
       movement_background_color: String,
@@ -337,11 +390,14 @@ export default defineComponent({
       special_forces: String,
     });
 
-    function assignStatsAttrs(attack, defense, movement, stacking, move_type) {
+    function assignStats(attack, defense, movement, stacking) {
       stats.attack = attack;
       stats.defense = defense;
       stats.movement = movement;
       stats.stacking_value = stacking;
+    }
+
+    function assignAttrs(move_type) {
       if (move_type === "wheeled") {
         attributes.movement_background_color = "null";
         attributes.movement_color = "motorized-ma";
@@ -357,6 +413,11 @@ export default defineComponent({
       }
     }
 
+    function assignStatsAttrs(attack, defense, movement, stacking, move_type) {
+      assignStats(attack, defense, movement, stacking);
+      assignAttrs(move_type);
+    }
+
     onBeforeMount(() => {
       attributes.special_forces = props.special_forces;
       if (props.country === "USA") {
@@ -366,17 +427,9 @@ export default defineComponent({
         if (props.unit_type === "SBCT") {
           assignStatsAttrs(4, 5, 8, 2, "wheeled");
         } else if (props.unit_type === "ABCT") {
-          assignStatsAttrs(7, 7, 8, 2, "mechanized");
+          assignStatsAttrs(7, 7, 8, 2, "tracked");
         } else {
-          stats.attack = 3;
-          stats.defense = 4;
-          stats.movement = 4;
-          attributes.movement_background_color = "black";
-          attributes.movement_color = "light-infantry-ma";
-          attributes.movement_type = "light";
-          stats.stacking_value = 1;
-          stats.defense = 4;
-          stats.movement = 4;
+          assignStatsAttrs(3, 4, 4, 1, "light");
         }
         switch (props.formation_id) {
           case "I":
@@ -418,31 +471,20 @@ export default defineComponent({
         attributes.stripe_color = "stripe-color-PRC";
         stats.efficiency_rating = 6;
         if (props.unit_type === "MCAB") {
-          stats.attack = 4;
-          stats.defense = 4;
-          stats.movement = 7;
-          stats.stacking_value = 2;
-          attributes.movement_background_color = "white";
-          attributes.movement_color = "motorized-ma";
-          attributes.movement_type = "wheeled";
+          assignStatsAttrs(4, 4, 7, 2, "wheeled");
         } else if (props.unit_type === "HCAB") {
-          stats.attack = 6;
-          stats.defense = 5;
-          stats.movement = 8;
-          stats.stacking_value = 2;
-          attributes.movement_background_color = "white";
-          attributes.movement_color = "mechanized-ma";
-          attributes.movement_type = "mechanized";
-        } else {
-          stats.attack = 3;
-          stats.defense = 4;
-          stats.movement = 4;
-          attributes.movement_background_color = "black";
-          attributes.movement_color = "light-infantry-ma";
-          stats.stacking_value = 1;
-          stats.defense = 4;
-          stats.movement = 4;
+          assignStatsAttrs(6, 5, 8, 2, "tracked");
+        } else if (props.unit_type === "LCAB") {
+          assignStatsAttrs(3, 4, 6, 2, "wheeled");
         }
+      } else if (props.country === "ROK") {
+        attributes.main_color = "white";
+        attributes.stats_color = "black";
+        attributes.formation_color = "formation-black";
+        attributes.unit_id_color = "unit-id-black";
+      } else if(props.country === "DPRK") {
+        attributes.main_color = "main-color-DPRK";
+        attributes.stripe_color = "stripe-color-DPRK";
       }
     });
 
@@ -464,6 +506,10 @@ export default defineComponent({
   fill: #f5ea14;
 }
 
+.stripe-color-DPRK {
+  fill: #024fa2;
+}
+
 .main-color-USA {
   fill: #6f7328;
 }
@@ -474,6 +520,10 @@ export default defineComponent({
 
 .main-color-PRC {
   fill: #ed2128;
+}
+
+.main-color-DPRK {
+  fill: #ed1c27;
 }
 
 .PRC-Sigil {
@@ -488,27 +538,57 @@ export default defineComponent({
   font-weight: 700;
 }
 
+@mixin crimson-text {
+  font-family: CrimsonText-Bold, Crimson Text, serif;
+}
+
 @mixin ibm {
   font-family: IBMPlexSerif-Bold, IBM Plex Serif, serif;
 }
 
-.er {
-  @include white-fill;
-  @include font-weight-700;
-  //transform: translate(487 298.46) scale(1.11 1);
-  transform: matrix(8, 0, 0, 8, 488, 305);
+@mixin small-text {
+  @include crimson-text;
+  font-weight: 600;
+  font-size: 120px;
+}
+.small-white {
+  @include small-text;
+  fill: white;
+}
+.small-black {
+  @include small-text;
+  fill: black;
 }
 
-.unit-id {
-  @include white-fill;
-  font-size: 90.18px;
+@mixin unit-id {
+  font-size: 90px;
   font-family: Impact, sans-serif;
   //transform: translate(104.83 27.2);
 }
 
-.attack {
-  @include ibm;
-  @include white-fill;
+.unit-id-white {
+  @include unit-id;
+  fill: white;
+}
+
+.unit-id-black {
+  @include unit-id;
+  fill: black;
+}
+
+.text-color {
+  .white {
+    @include crimson-text;
+    @include font-weight-700;
+    font-size: 180px;
+    fill: #ffffff;
+  }
+  .black {
+    @include crimson-text;
+    @include font-weight-700;
+    font-size: 180px;
+    fill: #000000;
+  }
 }
 
 .defense {
@@ -567,9 +647,7 @@ export default defineComponent({
 }
 
 .cls-10,
-.cls-15,
 .cls-17,
-.cls-5,
 .cls-8 {
   fill: #fff;
 }
@@ -594,7 +672,6 @@ export default defineComponent({
   font-family: IBMPlexSerif-Bold, IBM Plex Serif;
 }
 
-.cls-15,
 .cls-4,
 .cls-5,
 .cls-8 {
@@ -616,7 +693,7 @@ export default defineComponent({
 
 .cls-15,
 .cls-8 {
-  font-family: CrimsonText-Bold, Crimson Text;
+  @include crimson-text;
 }
 
 @mixin movement-allowance {
@@ -657,18 +734,26 @@ export default defineComponent({
 }
 
 .cls-15 {
-  font-size: 110px;
 }
 
 .cls-16 {
   font-size: 85px;
 }
 
-.formation {
+@mixin formation {
   font-size: 85px;
   @include ibm;
   @include font-weight-700;
+}
+
+.formation {
+  @include formation;
   fill: #fff;
+}
+
+.formation-black {
+  @include formation;
+  fill: black;
 }
 
 .cls-17 {

@@ -26,45 +26,53 @@
   <div class="grid-container">
     <counter
       class="counter"
+      country="ROK"
       unit_name="1 SBCT"
       unit_type="SBCT"
-      country="USA"
       unit_size="brigade"
       formation_id="XXV"
     ></counter>
+
     <counter
       class="counter"
-      unit_name="2 HCAB"
-      unit_type="HCAB"
       country="PRC"
+      unit_name="1 LCAB"
+      unit_type="LCAB"
+      unit_size="brigade"
+    ></counter>
+    <counter
+      class="counter"
+      country="PRC"
+      unit_name="2 MCAB"
+      unit_type="MCAB"
+      unit_size="brigade"
+    ></counter>
+    <counter
+      class="counter"
+      country="PRC"
+      unit_name="3 HCAB"
+      unit_type="HCAB"
       unit_size="brigade"
       formation_id="I"
     ></counter>
     <counter
       class="counter"
-      unit_name="3 MCAB"
-      unit_type="MCAB"
-      country="PRC"
-      unit_size="brigade"
-    ></counter>
-    <counter
-      class="counter"
+      country="DPRK"
       unit_name="1 BCT"
-      country="USA"
       unit_size="brigade"
       formation_id="10-mtn"
     ></counter>
     <counter
       class="counter"
-      unit_name="2 BCT"
       country="USA"
+      unit_name="2 BCT"
       unit_size="brigade"
       formation_id="101-abn"
     ></counter>
     <counter
       class="counter"
-      unit_name="3 BCT"
       country="USA"
+      unit_name="3 BCT"
       unit_size="brigade"
       formation_id="82-abn"
     ></counter>
@@ -133,9 +141,8 @@ $hi: calc(1366px / 4);
 
 .grid-container {
   display: grid;
-  grid-column-gap: 5px;
-  grid-template-columns: auto auto auto;
-  padding: 2px;
+  grid-column-gap: 1px;
+  grid-template-columns: auto auto auto auto auto;
 }
 
 .grid-container .counter {
