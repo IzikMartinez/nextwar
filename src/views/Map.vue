@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onBeforeMount, reactive} from "vue";
+import { computed, defineComponent, onBeforeMount, reactive } from "vue";
 import store from "@/store";
 import hex from "../components/Hex.vue";
 import counter from "@/components/Counter.vue";
