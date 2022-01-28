@@ -1,8 +1,12 @@
 import { createStore } from "vuex";
 
-export const store = createStore({
+const store = createStore({
   state: {
     hexCoords: {},
+    counterCoords: {
+      x: 0,
+      y: 0,
+    },
   },
   mutations: {
   },
@@ -11,3 +15,5 @@ export const store = createStore({
   modules: {
   }
 });
+
+export default store;

@@ -2,23 +2,38 @@
   <div class="map-section">
     <svg class="map" height="1000" width="2000">
       <template v-for="{ index, x, y } in hexState.hexes" :key="index">
-        <g class="hexen" >
-          <hex v-bind:x="x" v-bind:y="y" @click="clickLog(x, y)" terrain="clear"/>
+        <g class="hexen">
+          <hex
+            v-bind:x="x"
+            v-bind:y="y"
+            @click="clickLog(x, y)"
+            terrain="clear"
+          />
         </g>
       </template>
+      <counter
+        class="counter-img"
+        :style="`--rad: ${computedWidth}; --x: ${computedX}; --y: ${computedY}`"
+        country="PRC"
+        unit_name="2 MCAB"
+        unit_type="MCAB"
+        unit_size="brigade"
+      ></counter>
     </svg>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
-import { store } from "@/store";
+import {computed, defineComponent, onBeforeMount, reactive} from "vue";
+import store from "@/store";
 import hex from "../components/Hex.vue";
+import counter from "@/components/Counter.vue";
 
 export default defineComponent({
   name: "Map",
   components: {
     hex,
+    counter,
   },
   setup(props, context) {
     const hexState = reactive({
@@ -52,9 +67,22 @@ export default defineComponent({
     }
 
     function clickLog(x: number, y: number) {
-      store.state.hexCoords = { x, y };
-      console.log(store.state.hexCoords);
+      store.state.counterCoords.x = x / 150;
+      store.state.counterCoords.y = y / 87;
+      console.log(store.state.counterCoords);
     }
+
+    const computedWidth = computed(() => {
+      return 0.1;
+    });
+
+    const computedX = computed(() => {
+      return store.state.counterCoords.x * 150 + 50;
+    });
+
+    const computedY = computed(() => {
+      return store.state.counterCoords.y * 87 + 30;
+    });
 
     onBeforeMount(() => {
       const rows = 10;
@@ -67,6 +95,9 @@ export default defineComponent({
     return {
       hexState,
       clickLog,
+      computedWidth,
+      computedX,
+      computedY,
     };
   },
 });
@@ -82,11 +113,20 @@ export default defineComponent({
 }
 
 .hexen {
-  transform: scale(0.5);
+  transform: scale(1);
 }
 
 .counter-img {
-  border-radius: 8em;
-  &:hover { transform: scale(0.1) }
+  --rad: 0.07;
+  --x: 50;
+  --y: 30;
+  position: absolute;
+  /*left: 900px;
+  top: 600px;*/
+  border-radius: 5em;
+  transform: matrix(var(--rad), 0, 0, var(--rad), var(--x), var(--y));
+  &:hover {
+    transform: matrix(var(--rad), 0, 0, var(--rad), var(--x), var(--y));
+  }
 }
 </style>

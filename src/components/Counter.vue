@@ -93,16 +93,28 @@
         </template>
         <template v-else-if="country === 'DPRK'">
           <g transform="scale(9 9) translate(30 -7)">
-            <circle fill="#fff" cx="24" cy="18" r="8"/>
-            <g id="star" transform="translate(24,18) scale(7.75)" fill="#ED1C27">
+            <circle fill="#fff" cx="24" cy="18" r="8" />
+            <g
+              id="star"
+              transform="translate(24,18) scale(7.75)"
+              fill="#ED1C27"
+            >
               <g id="cone">
-                <polygon id="triangle" points="0,0 0,1 .5,1" transform="translate(0,-1) rotate(18)"/>
-                <use xlink:href="#triangle" transform="scale(-1,1)" id="use12"/>
+                <polygon
+                  id="triangle"
+                  points="0,0 0,1 .5,1"
+                  transform="translate(0,-1) rotate(18)"
+                />
+                <use
+                  xlink:href="#triangle"
+                  transform="scale(-1,1)"
+                  id="use12"
+                />
               </g>
-              <use xlink:href="#cone" transform="rotate(72)" id="use14"/>
-              <use xlink:href="#cone" transform="rotate(-72)" id="use16"/>
-              <use xlink:href="#cone" transform="rotate(144)" id="use18"/>
-              <use xlink:href="#cone" transform="rotate(-144)" id="use20"/>
+              <use xlink:href="#cone" transform="rotate(72)" id="use14" />
+              <use xlink:href="#cone" transform="rotate(-72)" id="use16" />
+              <use xlink:href="#cone" transform="rotate(144)" id="use18" />
+              <use xlink:href="#cone" transform="rotate(-144)" id="use20" />
             </g>
           </g>
         </template>
@@ -265,7 +277,10 @@
       </g>
 
       <g id="Unit_ID" data-name="Unit ID">
-        <text v-bind:class="attributes.unit_id_color" transform="translate(27.2 104.83)">
+        <text
+          v-bind:class="attributes.unit_id_color"
+          transform="translate(27.2 104.83)"
+        >
           {{ props.unit_name }}
         </text>
       </g>
@@ -352,7 +367,7 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, onBeforeMount, reactive } from "vue";
 
 export default defineComponent({
@@ -376,8 +391,8 @@ export default defineComponent({
     });
 
     const attributes = reactive({
-      main_color: String,
-      stripe_color: String,
+      main_color: "",
+      stripe_color: "",
       color: "cls-14",
       unit_id_color: "unit-id-white",
       formation_color: "formation",
@@ -385,19 +400,24 @@ export default defineComponent({
       small_text_color: "small-white",
       symbol_color: "black",
       movement_color: "white",
-      movement_background_color: String,
+      movement_background_color: "",
+      special_forces: "",
       movement_type: "",
-      special_forces: String,
     });
 
-    function assignStats(attack, defense, movement, stacking) {
+    function assignStats(
+      attack: number,
+      defense: number,
+      movement: number,
+      stacking: number
+    ) {
       stats.attack = attack;
       stats.defense = defense;
       stats.movement = movement;
       stats.stacking_value = stacking;
     }
 
-    function assignAttrs(move_type) {
+    function assignAttrs(move_type: string) {
       if (move_type === "wheeled") {
         attributes.movement_background_color = "null";
         attributes.movement_color = "motorized-ma";
@@ -413,13 +433,21 @@ export default defineComponent({
       }
     }
 
-    function assignStatsAttrs(attack, defense, movement, stacking, move_type) {
+    function assignStatsAttrs(
+      attack: number,
+      defense: number,
+      movement: number,
+      stacking: number,
+      move_type: string
+    ) {
       assignStats(attack, defense, movement, stacking);
       assignAttrs(move_type);
     }
 
     onBeforeMount(() => {
-      attributes.special_forces = props.special_forces;
+      if (props.special_forces) {
+        attributes.special_forces = props.special_forces;
+      }
       if (props.country === "USA") {
         attributes.main_color = "main-color-USA";
         attributes.stripe_color = "stripe-color-USA";
@@ -482,7 +510,7 @@ export default defineComponent({
         attributes.stats_color = "black";
         attributes.formation_color = "formation-black";
         attributes.unit_id_color = "unit-id-black";
-      } else if(props.country === "DPRK") {
+      } else if (props.country === "DPRK") {
         attributes.main_color = "main-color-DPRK";
         attributes.stripe_color = "stripe-color-DPRK";
       }
