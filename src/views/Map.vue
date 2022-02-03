@@ -26,6 +26,7 @@
               counterRefs[index] = el;
             }
           "
+          @click="counterClick(index)"
         ></Counter>
       </g>
     </svg>
@@ -104,7 +105,11 @@ const counterRefs = ref([]);
 function clickLog(x: number, y: number) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  console.log(counterRefs.value[2].testMethod(x,y));
+  console.log(counterRefs.value[store.counterIndex].testMethod(x,y));
+}
+
+function counterClick(index: number) {
+  store.counterIndex = index;
 }
 
 const computedX = computed(() => {

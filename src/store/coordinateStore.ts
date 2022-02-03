@@ -10,7 +10,7 @@ export const useCoordStore = defineStore("main", {
       },
       columnOffset: 300,
       rowOffset: 87,
-      counterRef: ref(),
+      counterIndex: 0,
     };
   },
   getters: {
