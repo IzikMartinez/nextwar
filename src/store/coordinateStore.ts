@@ -8,7 +8,7 @@ export const useCoordStore = defineStore("main", {
         x: 0,
         y: 0,
       },
-      columnOffset: 300,
+      columnCoefficient: 300,
       rowOffset: 87,
       counterIndex: 0,
     };

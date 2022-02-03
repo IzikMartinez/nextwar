@@ -1,12 +1,12 @@
 <template>
   <div class="map-section">
     <svg class="map" height="1000" width="2000">
-      <template v-for="{ index, x, y } in hexState.hexes" :key="index">
+      <template v-for="{ index, x, y } in gridMake.hexState.hexes" :key="index">
         <g class="hexen">
           <Hex
             v-bind:x="x"
             v-bind:y="y"
-            @click="clickLog(x, y)"
+            @click="callCounterMove(x, y)"
             terrain="clear"
             :hex_x="x"
             :hex_y="y"
@@ -26,7 +26,7 @@
               counterRefs[index] = el;
             }
           "
-          @click="counterClick(index)"
+          @click="getCounterIndex(index)"
         ></Counter>
       </g>
     </svg>
@@ -34,23 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, ref, reactive} from "vue";
+import { onBeforeMount, ref} from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
 import CounterAttrs from "@/types/counter";
+import { makeGrid } from "@/scripts/makeGrid";
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
 
 const store = useCoordStore();
-const hexState = reactive({
-  hexes: [{}],
-});
-/* Make Columns
- *  Input: Number (int), y_in (int)
- *  Output: None
- *  Description: This function uses a for loop to generate multiple elements for the Hexes list. i is the iterator
- *   k is the y value modifier. Each row needs to be 87 pixels away from the last, and thus k multiples the y_in
- *   variable by 87 to produce the position for the desired row.
- * */
+const gridMake = makeGrid();
+const counterRefs = ref([]);
 
 const counters = ref<CounterAttrs[]>([
   {
@@ -84,47 +77,22 @@ const counters = ref<CounterAttrs[]>([
     c_ref: 3,
   },
 ]);
-function getRowOffset(row_index: number) {
-  return store.rowOffset * row_index;
-}
 
-function getColumnOffset(odd: boolean): number {
-  return odd ? 150 : 0;
-}
-
-function makeColumns(num_of_col: number, row_index: number, odd = false) {
-  const k = getRowOffset(row_index);
-  const c_offset = getColumnOffset(odd);
-  for (let column = 0; column < num_of_col; column++) {
-    let j = column * store.columnOffset + c_offset;
-    hexState.hexes.push({ x: j, y: k });
-  }
-}
-
-const counterRefs = ref([]);
-function clickLog(x: number, y: number) {
+function callCounterMove(x: number, y: number) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  console.log(counterRefs.value[store.counterIndex].testMethod(x,y));
+  console.log(counterRefs.value[store.counterIndex].counterMove(x,y));
 }
 
-function counterClick(index: number) {
+function getCounterIndex(index: number) {
   store.counterIndex = index;
 }
-
-const computedX = computed(() => {
-  return store.counterX_pos;
-});
-
-const computedY = computed(() => {
-  return store.counterY_pos;
-});
 
 onBeforeMount(() => {
   const rows = 10;
   for (let i = 0; i < rows; i += 2) {
-    makeColumns(8, i);
-    makeColumns(7, i + 1, true);
+    gridMake.makeColumns(8, i);
+    gridMake.makeColumns(7, i + 1, true);
   }
 });
 </script>
