@@ -9,39 +9,33 @@
   </svg>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeMount, reactive } from "vue";
+<script setup lang="ts">
+import { defineProps, onBeforeMount, reactive } from "vue";
 
-export default defineComponent({
-  name: "Hex",
-  props: {
-    terrain: String,
-  },
-  setup(props) {
-    const attributes = reactive({
-      terrain: "clear",
-      leg_ma: Number,
-      light_ma: Number,
-      motorized_ma: Number,
-      mechanized_ma: Number,
-    });
+const props = defineProps({
+  terrain: String,
+  hex_x: Number,
+  hex_y: Number,
+});
+const attributes = reactive({
+  terrain: "clear",
+  leg_ma: Number,
+  light_ma: Number,
+  motorized_ma: Number,
+  mechanized_ma: Number,
+});
 
-    onBeforeMount( () => {
-      if (props.terrain === "rough") {
-        attributes.terrain = "rough";
-      } else if (props.terrain === "highland") {
-        attributes.terrain = "highland";
-      } else if(props.terrain === "river") {
-        attributes.terrain = "river";
-      } else {
-        attributes.terrain = "";
-      }
-    });
-    return {
-      attributes,
-      props,
-    };
-  },
+onBeforeMount(() => {
+  if (props.terrain === "rough") {
+    attributes.terrain = "rough";
+  } else if (props.terrain === "highland") {
+    attributes.terrain = "highland";
+  } else if (props.terrain === "river") {
+    attributes.terrain = "river";
+  } else {
+    attributes.terrain = "";
+    // I can tell you've been leaning on strap-ons and dickgirls as a replacement for a proper gangbang centered on the main girl. Frankly, I think it's time we saw something new, and Michelle with her Uncles would fit the bill perfectly.
+  }
 });
 </script>
 

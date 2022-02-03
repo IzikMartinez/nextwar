@@ -2,7 +2,9 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 600 600"
-    style="position: relative"
+    class="counter-style"
+    :style="`--x: ${computedX}; --y: ${computedY}`"
+    @click="focusToggle"
   >
     <g id="USA_Back">
       <rect v-bind:class="attributes.main_color" width="600" height="600" />
@@ -367,165 +369,204 @@
   </svg>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeMount, reactive } from "vue";
+<script setup lang="ts">
+import {computed, defineProps, defineExpose, onBeforeMount, reactive, ref} from "vue";
+import { useCoordStore } from "@/store/coordinateStore";
 
-export default defineComponent({
-  name: "Counter",
-  props: {
-    country: String,
-    unit_name: String,
-    unit_type: String,
-    unit_size: String,
-    formation_id: String,
-    special_forces: String,
-  },
-  setup: function (props, context) {
-    const stats = reactive({
-      unit_id: "1 SBCT",
-      attack: 3,
-      defense: 3,
-      movement: 8,
-      efficiency_rating: 6,
-      stacking_value: 2,
-    });
+const store = useCoordStore();
 
-    const attributes = reactive({
-      main_color: "",
-      stripe_color: "",
-      color: "cls-14",
-      unit_id_color: "unit-id-white",
-      formation_color: "formation",
-      stats_color: "white",
-      small_text_color: "small-white",
-      symbol_color: "black",
-      movement_color: "white",
-      movement_background_color: "",
-      special_forces: "",
-      movement_type: "",
-    });
+const props = defineProps({
+  country: String,
+  unit_name: String,
+  unit_type: String,
+  unit_size: String,
+  formation_id: String,
+  special_forces: String,
+});
 
-    function assignStats(
-      attack: number,
-      defense: number,
-      movement: number,
-      stacking: number
-    ) {
-      stats.attack = attack;
-      stats.defense = defense;
-      stats.movement = movement;
-      stats.stacking_value = stacking;
+const coordinates = reactive({
+  x: 0,
+  y: 0,
+});
+
+let focused = false;
+
+const stats = reactive({
+  unit_id: "1 SBCT",
+  attack: 3,
+  defense: 3,
+  movement: 8,
+  efficiency_rating: 6,
+  stacking_value: 2,
+});
+
+const attributes = reactive({
+  main_color: "",
+  stripe_color: "",
+  color: "cls-14",
+  unit_id_color: "unit-id-white",
+  formation_color: "formation",
+  stats_color: "white",
+  small_text_color: "small-white",
+  symbol_color: "black",
+  movement_color: "white",
+  movement_background_color: "",
+  special_forces: "",
+  movement_type: "",
+});
+
+const computedX = computed(() => {
+  return coordinates.x + 50;
+});
+
+const computedY = computed(() => {
+  return coordinates.y + 30;
+});
+
+function assignStats(
+  attack: number,
+  defense: number,
+  movement: number,
+  stacking: number
+) {
+  stats.attack = attack;
+  stats.defense = defense;
+  stats.movement = movement;
+  stats.stacking_value = stacking;
+}
+
+function assignAttrs(move_type: string) {
+  if (move_type === "wheeled") {
+    attributes.movement_background_color = "null";
+    attributes.movement_color = "motorized-ma";
+    attributes.movement_type = "wheeled";
+  } else if (move_type === "tracked") {
+    attributes.movement_background_color = "white";
+    attributes.movement_color = "mechanized-ma";
+    attributes.movement_type = "mechanized";
+  } else if (move_type === "light") {
+    attributes.movement_background_color = "black";
+    attributes.movement_color = "light-infantry-ma";
+    attributes.movement_type = "light";
+  }
+}
+
+function assignStatsAttrs(
+  attack: number,
+  defense: number,
+  movement: number,
+  stacking: number,
+  move_type: string
+) {
+  assignStats(attack, defense, movement, stacking);
+  assignAttrs(move_type);
+}
+
+const testMethod = (x: number, y: number) => {
+  if(focused) {
+    coordinates.x = x;
+    coordinates.y = y;
+    focused = false;
+  }
+  console.log(coordinates.x, coordinates.y);
+};
+
+defineExpose({
+  testMethod,
+});
+
+function focusToggle() {
+  focused = !focused;
+}
+
+onBeforeMount(() => {
+  if (props.special_forces) {
+    attributes.special_forces = props.special_forces;
+  }
+  if (props.country === "USA") {
+    attributes.main_color = "main-color-USA";
+    attributes.stripe_color = "stripe-color-USA";
+    stats.efficiency_rating = 7;
+    if (props.unit_type === "SBCT") {
+      assignStatsAttrs(4, 5, 8, 2, "wheeled");
+    } else if (props.unit_type === "ABCT") {
+      assignStatsAttrs(7, 7, 8, 2, "tracked");
+    } else {
+      assignStatsAttrs(3, 4, 4, 1, "light");
     }
-
-    function assignAttrs(move_type: string) {
-      if (move_type === "wheeled") {
-        attributes.movement_background_color = "null";
-        attributes.movement_color = "motorized-ma";
-        attributes.movement_type = "wheeled";
-      } else if (move_type === "tracked") {
-        attributes.movement_background_color = "white";
-        attributes.movement_color = "mechanized-ma";
-        attributes.movement_type = "mechanized";
-      } else if (move_type === "light") {
-        attributes.movement_background_color = "black";
-        attributes.movement_color = "light-infantry-ma";
-        attributes.movement_type = "light";
-      }
+    switch (props.formation_id) {
+      case "I":
+        attributes.color = "red";
+        break;
+      case "CAV":
+        attributes.color = "green";
+        break;
+      case "II":
+        attributes.color = "coral";
+        break;
+      case "III":
+        attributes.color = "yellow";
+        break;
+      case "XXV":
+        attributes.color = "light-blue";
+        break;
+      case "10-mtn":
+        attributes.color = "purple";
+        attributes.special_forces = "mountain";
+        break;
+      case "101-abn":
+        attributes.color = "forest-green";
+        attributes.symbol_color = "white";
+        attributes.special_forces = "paratrooper";
+        break;
+      case "82-abn":
+        attributes.color = "navy";
+        attributes.symbol_color = "white";
+        attributes.special_forces = "paratrooper";
+        break;
+      default:
+        attributes.color = "white";
+        break;
     }
-
-    function assignStatsAttrs(
-      attack: number,
-      defense: number,
-      movement: number,
-      stacking: number,
-      move_type: string
-    ) {
-      assignStats(attack, defense, movement, stacking);
-      assignAttrs(move_type);
+  } else if (props.country === "PRC") {
+    // CHINA
+    attributes.main_color = "main-color-PRC";
+    attributes.stripe_color = "stripe-color-PRC";
+    stats.efficiency_rating = 6;
+    if (props.unit_type === "MCAB") {
+      assignStatsAttrs(4, 4, 7, 2, "wheeled");
+    } else if (props.unit_type === "HCAB") {
+      assignStatsAttrs(6, 5, 8, 2, "tracked");
+    } else if (props.unit_type === "LCAB") {
+      assignStatsAttrs(3, 4, 6, 2, "wheeled");
     }
-
-    onBeforeMount(() => {
-      if (props.special_forces) {
-        attributes.special_forces = props.special_forces;
-      }
-      if (props.country === "USA") {
-        attributes.main_color = "main-color-USA";
-        attributes.stripe_color = "stripe-color-USA";
-        stats.efficiency_rating = 7;
-        if (props.unit_type === "SBCT") {
-          assignStatsAttrs(4, 5, 8, 2, "wheeled");
-        } else if (props.unit_type === "ABCT") {
-          assignStatsAttrs(7, 7, 8, 2, "tracked");
-        } else {
-          assignStatsAttrs(3, 4, 4, 1, "light");
-        }
-        switch (props.formation_id) {
-          case "I":
-            attributes.color = "red";
-            break;
-          case "CAV":
-            attributes.color = "green";
-            break;
-          case "II":
-            attributes.color = "coral";
-            break;
-          case "III":
-            attributes.color = "yellow";
-            break;
-          case "XXV":
-            attributes.color = "light-blue";
-            break;
-          case "10-mtn":
-            attributes.color = "purple";
-            attributes.special_forces = "mountain";
-            break;
-          case "101-abn":
-            attributes.color = "forest-green";
-            attributes.symbol_color = "white";
-            attributes.special_forces = "paratrooper";
-            break;
-          case "82-abn":
-            attributes.color = "navy";
-            attributes.symbol_color = "white";
-            attributes.special_forces = "paratrooper";
-            break;
-          default:
-            attributes.color = "white";
-            break;
-        }
-      } else if (props.country === "PRC") {
-        // CHINA
-        attributes.main_color = "main-color-PRC";
-        attributes.stripe_color = "stripe-color-PRC";
-        stats.efficiency_rating = 6;
-        if (props.unit_type === "MCAB") {
-          assignStatsAttrs(4, 4, 7, 2, "wheeled");
-        } else if (props.unit_type === "HCAB") {
-          assignStatsAttrs(6, 5, 8, 2, "tracked");
-        } else if (props.unit_type === "LCAB") {
-          assignStatsAttrs(3, 4, 6, 2, "wheeled");
-        }
-      } else if (props.country === "ROK") {
-        attributes.main_color = "white";
-        attributes.stats_color = "black";
-        attributes.formation_color = "formation-black";
-        attributes.unit_id_color = "unit-id-black";
-      } else if (props.country === "DPRK") {
-        attributes.main_color = "main-color-DPRK";
-        attributes.stripe_color = "stripe-color-DPRK";
-      }
-    });
-
-    return {
-      attributes,
-      stats,
-      props,
-    };
-  },
+  } else if (props.country === "ROK") {
+    attributes.main_color = "white";
+    attributes.stats_color = "black";
+    attributes.formation_color = "formation-black";
+    attributes.unit_id_color = "unit-id-black";
+  } else if (props.country === "DPRK") {
+    attributes.main_color = "main-color-DPRK";
+    attributes.stripe_color = "stripe-color-DPRK";
+  }
 });
 </script>
 
 <style scoped lang="scss">
+.counter-style {
+  --x: 50;
+  --y: 30;
+  --scale: 0.1;
+  border-radius: 5px;
+  transform: matrix(var(--scale), 0, 0, var(--scale), var(--x), var(--y));
+  &:hover {
+    //transform: matrix(0.15, 0, 0, 0.15, 0, 10);
+  }
+  &:focus {
+    border: 20px #1f6dff;
+  }
+}
+
 .stripe-color-USA {
   fill: #a4a966;
 }

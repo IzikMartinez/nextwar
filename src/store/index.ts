@@ -8,6 +8,14 @@ const store = createStore({
       y: 0,
     },
   },
+  getters: {
+    getX: (state) => {
+      return state.counterCoords.x * 150 + 50;
+    },
+    getY: (state) => {
+      return state.counterCoords.y * 87 + 30;
+    },
+  },
   mutations: {},
   actions: {},
   modules: {},

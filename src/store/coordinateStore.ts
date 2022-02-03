@@ -1,18 +1,24 @@
 import { defineStore } from "pinia";
+import {ref} from "vue";
 
 export const useCoordStore = defineStore("main", {
-  state: () => ({
-    counterCoords: {
-      x: 4,
-      y: 5,
-    },
-  }),
+  state: () => {
+    return {
+      counterCoords: {
+        x: 0,
+        y: 0,
+      },
+      columnOffset: 300,
+      rowOffset: 87,
+      counterRef: ref(),
+    };
+  },
   getters: {
-    counterX: (state) => {
-      state.counterCoords.x * 150 + 50;
+    counterX_pos: (state) => {
+      return state.counterCoords.x * 150 + 50;
     },
-    counterY: (state) => {
-      state.counterCoords.y * 87 + 30;
+    counterY_pos: (state) => {
+      return state.counterCoords.y * 87 + 30;
     },
   },
 });
