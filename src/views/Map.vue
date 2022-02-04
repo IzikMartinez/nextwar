@@ -40,6 +40,7 @@ import CounterAttrs from "@/types/counter";
 import { makeGrid } from "@/scripts/makeGrid";
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
+import hex from "@/types/hex";
 
 const store = useCoordStore();
 const gridMake = makeGrid();
@@ -78,10 +79,23 @@ const counters = ref<CounterAttrs[]>([
   },
 ]);
 
+const hexen = ref<hex[]>([
+  {
+    terrain: "flat",
+    x_pos: 0,
+    y_pos: 0,
+  },
+  {
+    terrain: "rough",
+    x_pos: 1,
+    y_pos: 0,
+  }
+]);
+
 function callCounterMove(x: number, y: number) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  console.log(counterRefs.value[store.counterIndex].counterMove(x,y));
+  console.log(counterRefs.value[store.counterIndex].counterMove(x/150,y/87));
 }
 
 function getCounterIndex(index: number) {

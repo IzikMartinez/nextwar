@@ -1,8 +1,7 @@
 interface Hex {
   terrain: string;
-  movement_cost: number;
-  def_mod: number;
-  atk_mod: number;
+  x_pos: number;
+  y_pos: number;
 }
 
 export default Hex;

@@ -385,29 +385,34 @@ const props = defineProps({
   special_forces: String,
 });
 
-const counterMaker = makeCounter(props.special_forces || "", props.country as string, props.formation_id as string, props.unit_type as string)
+const counterMaker = makeCounter(
+  props.special_forces ?? "",
+  props.country as string,
+  props.formation_id as string,
+  props.unit_type as string
+);
 
 const stats = counterMaker.stats;
 
 const attributes = counterMaker.attributes;
-
-let focused = false;
 
 const coordinates = reactive({
   x: 0,
   y: 0,
 });
 
+let focused = false;
+
 const computedX = computed(() => {
-  return coordinates.x + 50;
+  return coordinates.x * 150 + 50;
 });
 
 const computedY = computed(() => {
-  return coordinates.y + 30;
+  return coordinates.y * 87 + 30;
 });
 
 const counterMove = (x: number, y: number) => {
-  if(focused) {
+  if (focused) {
     coordinates.x = x;
     coordinates.y = y;
     focused = false;
@@ -415,13 +420,13 @@ const counterMove = (x: number, y: number) => {
   console.log(coordinates.x, coordinates.y);
 };
 
-defineExpose({
-  counterMove,
-});
-
 function focusToggle() {
   focused = !focused;
 }
+
+defineExpose({
+  counterMove,
+});
 
 onBeforeMount(() => {
   counterMaker.createCounter();

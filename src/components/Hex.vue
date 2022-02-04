@@ -12,6 +12,8 @@
 <script setup lang="ts">
 import { defineProps, onBeforeMount, reactive } from "vue";
 
+
+
 const props = defineProps({
   terrain: String,
   hex_x: Number,
@@ -34,7 +36,6 @@ onBeforeMount(() => {
     attributes.terrain = "river";
   } else {
     attributes.terrain = "";
-    // I can tell you've been leaning on strap-ons and dickgirls as a replacement for a proper gangbang centered on the main girl. Frankly, I think it's time we saw something new, and Michelle with her Uncles would fit the bill perfectly.
   }
 });
 </script>
