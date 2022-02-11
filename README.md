@@ -1,8 +1,21 @@
 # nextwar
 
+
+#in progress
+
+program terrain movement rules
 ## To do
-put the units on the hex map
 
-Move units around
+visual movement range
 
-program movement rules
+combat system
+
+roads
+
+step losses and counter elimination
+
+## Alpha checklist
+* movement system complete
+* combat system complete
+* game phases implemented
+* local network play

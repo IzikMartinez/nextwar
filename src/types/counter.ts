@@ -1,4 +1,4 @@
-interface CounterAttrs {
+interface MakeCounter {
   class: string;
   faction: string;
   unit_name: string;
@@ -9,4 +9,4 @@ interface CounterAttrs {
   c_ref: number;
 }
 
-export default CounterAttrs;
+export default MakeCounter;

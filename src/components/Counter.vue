@@ -1,19 +1,12 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 600 600"
+  <g
+    :style="`--x: ${computedX}; --y: ${computedY};`"
     class="counter-style"
-    :style="`--x: ${computedX}; --y: ${computedY}`"
     @click="focusToggle"
   >
     <g id="USA_Back">
-      <rect v-bind:class="attributes.main_color" width="600" height="600" />
-      <rect
-        v-bind:class="attributes.stripe_color"
-        y="220"
-        width="600"
-        height="120"
-      />
+      <rect :class="attributes.main_color" width="600" height="600" />
+      <rect :class="attributes.stripe_color" y="220" width="600" height="120" />
       <g id="Corps_Color" data-name="Corps Color">
         <template v-if="$props.country === 'USA'">
           <g id="US_Army_Sigil">
@@ -122,7 +115,7 @@
         </template>
         <rect
           id="black box"
-          v-bind:class="attributes.symbol_color"
+          :class="attributes.symbol_color"
           x="155"
           y="180"
           width="290"
@@ -131,7 +124,7 @@
         />
         <rect
           id="unit_color"
-          v-bind:class="attributes.color"
+          :class="attributes.color"
           x="167.5"
           y="192.5"
           width="265"
@@ -142,7 +135,7 @@
       <template v-if="unit_type === 'ABCT' || unit_type === 'HCAB'">
         <g id="ABCT">
           <path
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M175.07,12.29a53.94,53.94,0,0,0-8.69-5.77h0a55,55,0,0,0-26-6.52H55.27A54.82,54.82,0,0,0,28.9,6.7a54,54,0,0,0-8.66,5.83A55.17,55.17,0,0,0,0,55.27v8.52a55.21,55.21,0,0,0,25.19,46.36,55.8,55.8,0,0,0,9.71,5h0a55.16,55.16,0,0,0,20.36,3.88h85.06a55.27,55.27,0,0,0,55.26-55.27V55.27A55.15,55.15,0,0,0,175.07,12.29ZM60.21,10.51h75.18a51.61,51.61,0,0,1,20.07,4L97.79,56.85l-58-42.2A51.69,51.69,0,0,1,60.21,10.51ZM11.34,63V56c0-14.7,7.48-27.75,19.08-36.08L89.49,63,35.71,102.42C21.15,94.54,11.34,79.85,11.34,63Zm124,45.51H60.21a52,52,0,0,1-13.77-1.83L97.81,69l51.68,37.61A52.24,52.24,0,0,1,135.39,108.54ZM184.25,63c0,16.72-9.67,31.32-24.08,39.24L106.11,62.91l58.8-43.16c11.75,8.32,19.34,21.47,19.34,36.27Z"
             transform="translate(205 220)"
           />
@@ -157,17 +150,17 @@
       >
         <g id="wheeled_armor_symbol">
           <path
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M249.45,324.57a22.68,22.68,0,1,0,22.68,22.67A22.67,22.67,0,0,0,249.45,324.57Zm0,39.13a16.46,16.46,0,1,1,16.45-16.46A16.45,16.45,0,0,1,249.45,363.7Z"
             transform="translate(0)"
           />
           <path
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M297.64,324.57a22.68,22.68,0,1,0,22.67,22.67A22.67,22.67,0,0,0,297.64,324.57Zm0,39.13a16.46,16.46,0,1,1,16.45-16.46A16.45,16.45,0,0,1,297.64,363.7Z"
             transform="translate(0)"
           />
           <path
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M345.83,324.57a22.68,22.68,0,1,0,22.67,22.67A22.67,22.67,0,0,0,345.83,324.57Zm0,39.13a16.46,16.46,0,1,1,16.45-16.46A16.45,16.45,0,0,1,345.83,363.7Z"
             transform="translate(0)"
           />
@@ -175,7 +168,7 @@
             id="Small_Armor_symbol"
             data-name="Small Armor"
             v-if="unit_type === 'SBCT' || unit_type === 'MCAB'"
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M337.7,228.19H257.58c-28.74,0-52.07,20.62-52.07,46.06v7.09c0,25.44,23.33,46.06,52.07,46.06H337.7c28.76,0,52.06-20.62,52.06-46.06v-7.09C389.76,248.81,366.46,228.19,337.7,228.19Zm41.38,52.52c0,21-20.6,37.94-46,37.94H262.23c-25.41,0-46-17-46-37.94v-5.83c0-21,20.63-37.94,46-37.94h70.82c25.43,0,46,17,46,37.94Z"
             transform="translate(0)"
           />
@@ -196,7 +189,7 @@
         v-if="unit_type !== 'ABCT' && unit_type !== 'HCAB'"
       >
         <rect
-          v-bind:class="attributes.symbol_color"
+          :class="attributes.symbol_color"
           x="140.73"
           y="279.21"
           width="313.81"
@@ -204,7 +197,7 @@
           transform="translate(200.91 -116.01) rotate(32.79)"
         />
         <rect
-          v-bind:class="attributes.symbol_color"
+          :class="attributes.symbol_color"
           x="140.73"
           y="279.21"
           width="313.81"
@@ -215,7 +208,7 @@
         <template v-if="attributes.special_forces === 'mountain'">
           <g id="Mountain">
             <polygon
-              v-bind:class="attributes.symbol_color"
+              :class="attributes.symbol_color"
               points="300.18,297.64 269,372.5 331.36,372.5 		"
             />
           </g>
@@ -223,7 +216,7 @@
         <template v-if="attributes.special_forces === 'marines'">
           <path
             id="Marine"
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M349.94,288.12l-7.44-14.27c-0.2-0.36-0.7-0.36-0.9,0l-7.44,14.27
 		c-0.18,0.34,0.07,0.75,0.44,0.75h4.06c-0.28,7.95-5.97,15.01-14.7,19.63c-2.27,1.2-4.76,2.24-7.41,3.09
 		c-3.75,1.19-7.84,2.01-12.15,2.34V252.2h23.28c1.39,0,2.51-1.15,2.51-2.56v-1.28c0-1.42-1.13-2.57-2.51-2.57H304.4v-6.01
@@ -239,7 +232,7 @@
         <template v-if="attributes.special_forces === 'paratrooper'">
           <path
             id="Para"
-            v-bind:class="attributes.symbol_color"
+            :class="attributes.symbol_color"
             d="M395,303.23l-5.41,6.51c-8.81-8.94-21.65-14.58-35.95-14.58c-26.55,0-48.07,19.43-48.07,43.39
 		c0,0.48,0.01,0.97,0.03,1.45h-9.67c0.02-0.48,0.03-0.97,0.03-1.45c0-23.96-21.52-43.39-48.07-43.39c-15.23,0-28.8,6.39-37.6,16.36
 		l-5.28-6.36c10.36-11.43,25.73-18.67,42.89-18.67c24.16,0,44.78,14.37,52.84,34.58c8.01-20.49,28.68-35.07,52.91-35.07
@@ -252,7 +245,7 @@
         <template v-if="unit_size === 'brigade'">
           <text
             id="X"
-            v-bind:class="attributes.formation_color"
+            :class="attributes.formation_color"
             transform="translate(260 177) scale(1.1 1)"
           >
             X
@@ -261,7 +254,7 @@
         <template v-else-if="unit_size === 'division'">
           <text
             id="XX"
-            v-bind:class="attributes.formation_color"
+            :class="attributes.formation_color"
             transform="translate(230 177) scale(1.1 1)"
           >
             XX
@@ -270,7 +263,7 @@
         <template v-else-if="unit_size === 'corps'">
           <text
             id="XXX"
-            v-bind:class="attributes.formation_color"
+            :class="attributes.formation_color"
             transform="translate(200 177) scale(1.1 1)"
           >
             XXX
@@ -280,7 +273,7 @@
 
       <g id="Unit_ID" data-name="Unit ID">
         <text
-          v-bind:class="attributes.unit_id_color"
+          :class="attributes.unit_id_color"
           transform="translate(27.2 104.83)"
         >
           {{ props.unit_name }}
@@ -291,7 +284,7 @@
           <text
             id="_3-2"
             data-name="3"
-            v-bind:class="attributes.stats_color"
+            :class="attributes.stats_color"
             transform="translate(81.62 538.96)"
           >
             {{ stats.attack }}
@@ -318,7 +311,7 @@
               attributes.movement_type === 'mechanized' ||
               attributes.movement_type === 'light'
             "
-            v-bind:class="attributes.movement_background_color"
+            :class="attributes.movement_background_color"
             x="430"
             y="410"
             width="110"
@@ -335,7 +328,7 @@
           <text
             id="_8"
             data-name="8"
-            v-bind:class="attributes.movement_color"
+            :class="attributes.movement_color"
             transform="translate(445 550) scale(0.84 1)"
           >
             {{ stats.movement }}
@@ -349,7 +342,7 @@
           <text
             id="_6"
             data-name="6"
-            v-bind:class="attributes.small_text_color"
+            :class="attributes.small_text_color"
             transform="translate(490 310)"
           >
             {{ stats.efficiency_rating }}
@@ -358,7 +351,7 @@
         <g id="Stacking">
           <circle class="charcoal" cx="80" cy="280" r="60" />
           <text
-            v-bind:class="attributes.small_text_color"
+            :class="attributes.small_text_color"
             transform="translate(55 318)"
           >
             {{ stats.stacking_value }}
@@ -366,13 +359,20 @@
         </g>
       </g>
     </g>
-  </svg>
+  </g>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, defineExpose, onBeforeMount, reactive } from "vue";
+import {
+  computed,
+  defineExpose,
+  defineProps,
+  onBeforeMount,
+  reactive,
+} from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
 import { makeCounter } from "@/scripts/makeCounter";
+import { hexAdjacency } from "@/scripts/hexAdjacency";
 
 const store = useCoordStore();
 
@@ -387,9 +387,9 @@ const props = defineProps({
 
 const counterMaker = makeCounter(
   props.special_forces ?? "",
-  props.country as string,
-  props.formation_id as string,
-  props.unit_type as string
+  props.country ?? "",
+  props.formation_id ?? "",
+  props.unit_type ?? ""
 );
 
 const stats = counterMaker.stats;
@@ -403,25 +403,57 @@ const coordinates = reactive({
 
 let focused = false;
 
+function odd() {
+  if (coordinates.x % 2 == 0) {
+    return 0;
+  } else {
+    return 87;
+  }
+}
+
 const computedX = computed(() => {
-  return coordinates.x * 150 + 50;
+  return coordinates.x * 150 + 100;
 });
 
 const computedY = computed(() => {
-  return coordinates.y * 87 + 30;
+  return coordinates.y * 174 + 35 + odd();
 });
 
-const counterMove = (x: number, y: number) => {
-  if (focused) {
+function TerrainCost(terrain: string) {
+  if (terrain === "clear") {
+    return 1;
+  } else if (terrain === "rough") {
+    return 2;
+  } else if (terrain === "mountain") {
+    return 4;
+  } else {
+    return 3;
+  }
+}
+
+
+const counterMove = (x: number, y: number, terrain: string) => {
+
+  const adjacency = hexAdjacency(coordinates.x, coordinates.y);
+  //Adjacency cannot be determined without knowing whether the row is odd or even due to the nature of hexagonal planes.
+  //Implement two separate functions to determine adjacency
+  //isAdjacentEven()
+  //isAdjacentOdd()
+  //Then call them based on whether Y is odd or even.
+  if (focused && adjacency.isAdjacent(x, y)) {
     coordinates.x = x;
     coordinates.y = y;
-    focused = false;
+    stats.movement -= TerrainCost(terrain);
+  } else {
+    console.log("Out of range");
   }
+  focused = false;
   console.log(coordinates.x, coordinates.y);
 };
 
 function focusToggle() {
   focused = !focused;
+  console.log("selected");
 }
 
 defineExpose({
@@ -437,7 +469,7 @@ onBeforeMount(() => {
 .counter-style {
   --x: 50;
   --y: 30;
-  --scale: 0.1;
+  --scale: 0.1667;
   border-radius: 5px;
   transform: matrix(var(--scale), 0, 0, var(--scale), var(--x), var(--y));
   &:hover {
@@ -619,7 +651,7 @@ onBeforeMount(() => {
 
 .cls-4,
 .cls-5 {
-  font-family: IBMPlexSerif-Bold, IBM Plex Serif;
+  font-family: IBMPlexSerif-Bold, IBM Plex Serif, monospace;
 }
 
 .cls-4,

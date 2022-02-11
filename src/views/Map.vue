@@ -1,18 +1,14 @@
 <template>
   <div class="map-section">
     <svg class="map" height="1000" width="2000">
-      <template v-for="{ index, x, y } in gridMake.hexState.hexes" :key="index">
-        <g class="hexen">
-          <Hex
-            v-bind:x="x"
-            v-bind:y="y"
-            @click="callCounterMove(x, y)"
-            terrain="clear"
-            :hex_x="x"
-            :hex_y="y"
-          />
-        </g>
-      </template>
+      <g v-for="(hex, index) in HexList" :key="index">
+        <Hex
+          @click="callCounterMove(hex.x_pos, hex.y_pos, hex.terrain)"
+          :terrain="hex.terrain"
+          :x="hex.x_pos"
+          :y="hex.y_pos"
+        ></Hex>
+      </g>
 
       <g v-for="(counter, index) in counters" :key="index">
         <Counter
@@ -26,7 +22,7 @@
               counterRefs[index] = el;
             }
           "
-          @click="getCounterIndex(index)"
+          @click="setCounterIndex(index)"
         ></Counter>
       </g>
     </svg>
@@ -34,19 +30,19 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref} from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
-import CounterAttrs from "@/types/counter";
+import MakeCounter from "@/types/counter";
 import { makeGrid } from "@/scripts/makeGrid";
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
-import hex from "@/types/hex";
+import HexType from "@/types/hexType";
 
 const store = useCoordStore();
 const gridMake = makeGrid();
 const counterRefs = ref([]);
 
-const counters = ref<CounterAttrs[]>([
+const counters = ref<MakeCounter[]>([
   {
     class: "counter-img",
     faction: "PRC",
@@ -79,9 +75,9 @@ const counters = ref<CounterAttrs[]>([
   },
 ]);
 
-const hexen = ref<hex[]>([
+const HexList = ref<HexType[]>([
   {
-    terrain: "flat",
+    terrain: "clear",
     x_pos: 0,
     y_pos: 0,
   },
@@ -89,16 +85,88 @@ const hexen = ref<hex[]>([
     terrain: "rough",
     x_pos: 1,
     y_pos: 0,
-  }
+  },
+  {
+    terrain: "rough",
+    x_pos: 2,
+    y_pos: 0,
+  },
+  {
+    terrain: "mountain",
+    x_pos: 3,
+    y_pos: 0,
+  },
+  {
+    terrain: "clear",
+    x_pos: 0,
+    y_pos: 1,
+  },
+  {
+    terrain: "rough",
+    x_pos: 1,
+    y_pos: 1,
+  },
+  {
+    terrain: "rough",
+    x_pos: 2,
+    y_pos: 1,
+  },
+  {
+    terrain: "mountain",
+    x_pos: 3,
+    y_pos: 1,
+  },
+  {
+    terrain: "clear",
+    x_pos: 0,
+    y_pos: 2,
+  },
+  {
+    terrain: "rough",
+    x_pos: 1,
+    y_pos: 2,
+  },
+  {
+    terrain: "rough",
+    x_pos: 2,
+    y_pos: 2,
+  },
+  {
+    terrain: "mountain",
+    x_pos: 3,
+    y_pos: 2,
+  },
+  {
+    terrain: "clear",
+    x_pos: 0,
+    y_pos: 3,
+  },
+  {
+    terrain: "rough",
+    x_pos: 1,
+    y_pos: 3,
+  },
+  {
+    terrain: "rough",
+    x_pos: 2,
+    y_pos: 3,
+  },
+  {
+    terrain: "mountain",
+    x_pos: 3,
+    y_pos: 3,
+  },
+
 ]);
 
-function callCounterMove(x: number, y: number) {
+function callCounterMove(x: number, y: number, terrain: string) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  console.log(counterRefs.value[store.counterIndex].counterMove(x/150,y/87));
+  counterRefs.value[store.counterIndex].counterMove(x, y, terrain);
+  return null;
 }
 
-function getCounterIndex(index: number) {
+function setCounterIndex(index: number) {
   store.counterIndex = index;
 }
 

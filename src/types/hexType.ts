@@ -1,7 +1,7 @@
-interface Hex {
+interface HexType {
   terrain: string;
   x_pos: number;
   y_pos: number;
 }
 
-export default Hex;
+export default HexType;
