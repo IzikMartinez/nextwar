@@ -1,5 +1,7 @@
 <template>
   <div class="map-section">
+    <button>Movement Phase</button>
+    <button>Combat Phase</button>
     <svg class="map" height="1000" width="2000">
       <g v-for="(hex, index) in HexList" :key="index">
         <Hex
@@ -65,11 +67,11 @@ const counters = ref<MakeCounter[]>([
   },
   {
     class: "counter-img",
-    faction: "PRC",
-    unit_name: "3 MCAB",
-    unit_type: "MCAB",
+    faction: "USA",
+    unit_name: "1 SBCT",
+    unit_type: "SBCT",
     unit_size: "brigade",
-    formation_id: "78GA",
+    formation_id: "II",
     special_forces: "no",
     c_ref: 3,
   },

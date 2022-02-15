@@ -433,14 +433,11 @@ function TerrainCost(terrain: string) {
 
 
 const counterMove = (x: number, y: number, terrain: string) => {
-
   const adjacency = hexAdjacency(coordinates.x, coordinates.y);
-  //Adjacency cannot be determined without knowing whether the row is odd or even due to the nature of hexagonal planes.
-  //Implement two separate functions to determine adjacency
-  //isAdjacentEven()
-  //isAdjacentOdd()
-  //Then call them based on whether Y is odd or even.
-  if (focused && adjacency.isAdjacent(x, y)) {
+
+  if (stats.movement - TerrainCost(terrain) < 0) {
+    console.log("Out of movement points");
+  } else if (focused && adjacency.isAdjacent(x, y)) {
     coordinates.x = x;
     coordinates.y = y;
     stats.movement -= TerrainCost(terrain);

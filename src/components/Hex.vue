@@ -97,7 +97,7 @@ polygon {
 }
 
 .mountain {
-  fill: #4e220b;
+  fill: #82492c;
 }
 
 .river {
