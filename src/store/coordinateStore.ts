@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 
 export const useCoordStore = defineStore("main", {
   state: () => {
@@ -10,6 +10,12 @@ export const useCoordStore = defineStore("main", {
       columnCoefficient: 300,
       rowOffset: 87,
       counterIndex: 0,
+      isMovePhase: true,
+      isCombatPhase: false,
+      setAttacker: false,
+      setDefender: false,
+      attackers: [0],
+      defender: 1,
     };
   },
   getters: {
@@ -18,6 +24,12 @@ export const useCoordStore = defineStore("main", {
     },
     counterY_pos: (state) => {
       return state.counterCoords.y * 87 + 30;
+    },
+    totalAttack: (state) => {
+      return state.attackers.reduce((a, b) => a + b);
+    },
+    oddsRatio: (state) => {
+      return state.attackers.reduce((a, b) => a + b) / state.defender;
     },
   },
 });

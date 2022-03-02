@@ -290,50 +290,9 @@
             {{ stats.attack }}
           </text>
         </g>
-        <g id="Defense" data-name="Defense">
-          <path
-            id="shield"
-            class="shield"
-            d="M362.83,405.91v76.88c0,.63,0,1.24,0,1.86-.81,42.78-29.69,77.15-65.16,77.15s-64.37-34.37-65.19-77.15c0-.62,0-1.23,0-1.86V405.91c1.76,6.85,15.67,12.19,32.59,12.19s30.86-5.35,32.61-12.21c1.73,6.86,15.66,12.21,32.59,12.21S361.08,412.76,362.83,405.91Z"
-            transform="translate(0)"
-          />
-          <g id="_3" data-name="3">
-            <text id="_3-2" data-name="3" class="defense">
-              {{ stats.defense }}
-            </text>
-            />
-          </g>
-        </g>
-        <g id="Mechanized_D">
-          <rect
-            id="mechanized_movement"
-            v-if="
-              attributes.movement_type === 'mechanized' ||
-              attributes.movement_type === 'light'
-            "
-            :class="attributes.movement_background_color"
-            x="430"
-            y="410"
-            width="110"
-            height="150"
-            rx="14"
-          />
-          <circle
-            v-if="attributes.movement_type === 'wheeled'"
-            class="charcoal"
-            cx="485"
-            cy="490"
-            r="85"
-          />
-          <text
-            id="_8"
-            data-name="8"
-            :class="attributes.movement_color"
-            transform="translate(445 550) scale(0.84 1)"
-          >
-            {{ stats.movement }}
-          </text>
-        </g>
+        <Stats :stat_value="stats.defense" stat_type="defense"></Stats>
+        <Stats :stat_value="stats.movement" stat_type="movement" :movement_type="attributes.movement_type"></Stats>
+
         <g id="ER" data-name="ER" transform="translate(10 10)">
           <polygon
             class="charcoal"
@@ -373,6 +332,7 @@ import {
 import { useCoordStore } from "@/store/coordinateStore";
 import { makeCounter } from "@/scripts/makeCounter";
 import { hexAdjacency } from "@/scripts/hexAdjacency";
+import Stats from "@/components/fragments/StatsMain.vue";
 
 const store = useCoordStore();
 
@@ -448,13 +408,28 @@ const counterMove = (x: number, y: number, terrain: string) => {
   console.log(coordinates.x, coordinates.y);
 };
 
+function attack(defense_in: number) {
+  //defense in
+  //compare defense in to attack
+  const ratio = stats.attack / defense_in ;
+  console.log("It worked: ", defense_in, ratio);
+  //return ratio
+}
+
 function focusToggle() {
-  focused = !focused;
-  console.log("selected");
+  if(store.isCombatPhase && store.setAttacker) {
+    store.attackers.push(stats.attack);
+  } else if (store.isCombatPhase && store.setDefender) {
+    store.defender = stats.defense;
+  } else {
+    focused = !focused;
+    console.log("selected");
+  }
 }
 
 defineExpose({
   counterMove,
+  attack,
 });
 
 onBeforeMount(() => {
@@ -581,9 +556,7 @@ onBeforeMount(() => {
   @include white-fill;
 }
 
-.charcoal {
-  fill: #393939;
-}
+
 .black {
   fill: #000000;
 }
@@ -629,10 +602,6 @@ onBeforeMount(() => {
 .cls-17,
 .cls-8 {
   fill: #fff;
-}
-
-.shield {
-  @include white-fill;
 }
 
 .cls-4 {

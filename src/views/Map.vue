@@ -1,7 +1,12 @@
 <template>
   <div class="map-section">
-    <button>Movement Phase</button>
-    <button>Combat Phase</button>
+    <button @click="moveClick">Movement Phase</button>
+    <button @click="combatClick">Combat Phase</button>
+    <button v-if="store.isCombatPhase === true" @click="attackerClick">Set attackers</button>
+    <button v-if="store.isCombatPhase === true" @click="defenderClick">Set set defenders</button>
+    <label v-if="store.isCombatPhase === true">{{ store.totalAttack }} </label>
+    <label v-if="store.isCombatPhase === true">{{ store.defender }}</label>
+    <label v-if="store.isCombatPhase === true"> {{ store.oddsRatio }}</label>
     <svg class="map" height="1000" width="2000">
       <g v-for="(hex, index) in HexList" :key="index">
         <Hex
@@ -76,6 +81,8 @@ const counters = ref<MakeCounter[]>([
     c_ref: 3,
   },
 ]);
+
+
 
 const HexList = ref<HexType[]>([
   {
@@ -164,12 +171,43 @@ const HexList = ref<HexType[]>([
 function callCounterMove(x: number, y: number, terrain: string) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  counterRefs.value[store.counterIndex].counterMove(x, y, terrain);
+  if(store.isMovePhase) {
+    counterRefs.value[store.counterIndex].counterMove(x, y, terrain);
+  } else if(store.isCombatPhase) {
+    counterRefs.value[store.counterIndex].attack(5);
+    // select attackers
+    // select target
+    // compute odds
+    // roll for result
+    // apply losses to units
+  }
   return null;
 }
 
 function setCounterIndex(index: number) {
   store.counterIndex = index;
+}
+
+function moveClick() {
+  store.isMovePhase = true;
+  store.isCombatPhase = false;
+}
+
+function combatClick() {
+  store.isMovePhase = false;
+  store.isCombatPhase = true;
+  console.log("combat phase");
+  console.log(store.isCombatPhase);
+}
+
+function attackerClick() {
+  store.setAttacker = true;
+  store.setDefender = false;
+}
+
+function defenderClick() {
+  store.setDefender = true;
+  store.setAttacker = false;
 }
 
 onBeforeMount(() => {
