@@ -2,11 +2,15 @@
   <div class="map-section">
     <button @click="moveClick">Movement Phase</button>
     <button @click="combatClick">Combat Phase</button>
-    <button v-if="store.isCombatPhase === true" @click="attackerClick">Set attackers</button>
-    <button v-if="store.isCombatPhase === true" @click="defenderClick">Set set defenders</button>
+    <button v-if="store.isCombatPhase === true" @click="attackerClick">
+      Set attackers
+    </button>
+    <button v-if="store.isCombatPhase === true" @click="defenderClick">
+      Set set defenders
+    </button>
     <label v-if="store.isCombatPhase === true">{{ store.totalAttack }} </label>
     <label v-if="store.isCombatPhase === true">{{ store.defender }}</label>
-    <label v-if="store.isCombatPhase === true"> {{ store.oddsRatio }}</label>
+    <label v-if="store.isCombatPhase === true">{{ store.oddsRatio }}</label>
     <svg class="map" height="1000" width="2000">
       <g v-for="(hex, index) in HexList" :key="index">
         <Hex
@@ -81,8 +85,6 @@ const counters = ref<MakeCounter[]>([
     c_ref: 3,
   },
 ]);
-
-
 
 const HexList = ref<HexType[]>([
   {
