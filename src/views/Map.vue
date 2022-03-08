@@ -1,16 +1,22 @@
 <template>
   <div class="map-section">
-    <button @click="moveClick">Movement Phase</button>
-    <button @click="combatClick">Combat Phase</button>
-    <button v-if="store.isCombatPhase === true" @click="attackerClick">
-      Set attackers
-    </button>
-    <button v-if="store.isCombatPhase === true" @click="defenderClick">
-      Set set defenders
-    </button>
-    <label v-if="store.isCombatPhase === true">{{ store.totalAttack }} </label>
-    <label v-if="store.isCombatPhase === true">{{ store.defender }}</label>
-    <label v-if="store.isCombatPhase === true">{{ store.oddsRatio }}</label>
+    <button v-if="store.isCombatPhase" @click="moveClick">Movement Phase</button>
+    <button v-if="store.isMovePhase" @click="combatPhaseClick">Combat Phase</button>
+    <template v-if="store.isCombatPhase === true">
+      <button @click="attackerClick">
+        Set attackers
+      </button>
+      <button @click="defenderClick">
+        Set set defenders
+      </button>
+      <button @click="combatClick">
+       Attack
+      </button>
+      <label>Total attack: {{ store.totalAttack }} </label>
+      <label>Defense: {{ store.defender }}</label>
+      <label>Column: {{ store.oddsRatio }}</label>
+      <label>Your losses: {{ result.your_loss}}, Enemy losses: {{result.enemy_loss}}</label>
+    </template>
     <svg class="map" height="1000" width="2000">
       <g v-for="(hex, index) in HexList" :key="index">
         <Hex
@@ -41,13 +47,14 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
 import MakeCounter from "@/types/counter";
 import { makeGrid } from "@/scripts/makeGrid";
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
 import HexType from "@/types/hexType";
+import {CombatOdds} from "@/scripts/combatOdds";
 
 const store = useCoordStore();
 const gridMake = makeGrid();
@@ -195,11 +202,25 @@ function moveClick() {
   store.isCombatPhase = false;
 }
 
-function combatClick() {
+function combatPhaseClick() {
   store.isMovePhase = false;
   store.isCombatPhase = true;
   console.log("combat phase");
   console.log(store.isCombatPhase);
+}
+
+const result = reactive({
+  your_loss: 0,
+  enemy_loss: 0,
+  retreat: false,
+});
+
+function combatClick() {
+  const combatOdds = CombatOdds(store.totalAttack, store.defender);
+  const holder = combatOdds.getResult();
+  result.your_loss = holder.yours;
+  result.enemy_loss = holder.theirs;
+  result.retreat = holder.retreat ?? false;
 }
 
 function attackerClick() {

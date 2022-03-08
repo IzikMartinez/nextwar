@@ -1,4 +1,5 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
+import { CombatOdds } from "@/scripts/combatOdds";
 
 export const useCoordStore = defineStore("main", {
   state: () => {
@@ -29,7 +30,12 @@ export const useCoordStore = defineStore("main", {
       return state.attackers.reduce((a, b) => a + b);
     },
     oddsRatio: (state) => {
-      return state.attackers.reduce((a, b) => a + b) / state.defender;
+      // return state.attackers.reduce((a, b) => a + b) / state.defender;
+      const combatOdds = CombatOdds(
+        state.attackers.reduce((a, b) => a + b),
+        state.defender
+      );
+      return combatOdds.getColumnIndex();
     },
   },
 });
