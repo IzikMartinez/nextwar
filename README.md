@@ -1,21 +1,19 @@
-#Next War
-
 ![](src/assets/nextwar.png)
 
 ## About
-Next war is a hex and counter strategy wargame that seeks simulate potential near-future conflicts. This web app recreates the 
+Next war is a hex and counter, strategy wargame played on a tabletop. The game seeks to simulate potential near-future conflicts via the use of detailed models that mimic realworld combat in the 21st century. This web app aims to recreate that board game as a modern single-page-application web app, to facilitate online play and easier learning of the (extremely) complex rules.
 
 For those new to the Next War series, rules can be found on the publishers website (GMT Games)
 
 #In progress
 
-step losses and effects of damage 
+Step losses and effects of damage 
 
-## To do
+## To do next
 
-* visual movement range
+* visual movement range indicator
 * automatic phase change
-* UI clean up
+* visual indication of which units are participating in combat
 * Roads and their effects on movement
 
 
