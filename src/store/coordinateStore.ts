@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { CombatOdds } from "@/scripts/combatOdds";
 
-export const useCoordStore = defineStore("main", {
+export const useCoordStore = defineStore("coordinatesMain", {
   state: () => {
     return {
       counterCoords: {

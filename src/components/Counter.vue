@@ -2,7 +2,7 @@
   <g
     :style="`--x: ${computedX}; --y: ${computedY};`"
     class="counter-style"
-    @click="focusToggle"
+    @click="onClickSwitch"
   >
     <g id="USA_Back">
       <rect :class="attributes.main_color" width="600" height="600" />
@@ -333,16 +333,20 @@ import { useCoordStore } from "@/store/coordinateStore";
 import { makeCounter } from "@/scripts/makeCounter";
 import { hexAdjacency } from "@/scripts/hexAdjacency";
 import Stats from "@/components/fragments/StatsMain.vue";
+import {CombatStore} from "@/store/combatStore";
 
 const store = useCoordStore();
 
 const props = defineProps({
+  id: String,
   country: String,
   unit_name: String,
   unit_type: String,
   unit_size: String,
   formation_id: String,
   special_forces: String,
+  x_in: Number,
+  y_in: Number,
 });
 
 const counterMaker = makeCounter(
@@ -357,8 +361,8 @@ const stats = counterMaker.stats;
 const attributes = counterMaker.attributes;
 
 const coordinates = reactive({
-  x: 0,
-  y: 0,
+  x: props.x_in ?? 1,
+  y: props.y_in ?? 1,
 });
 
 let focused = false;
@@ -408,28 +412,51 @@ const counterMove = (x: number, y: number, terrain: string) => {
   console.log(coordinates.x, coordinates.y);
 };
 
-function attack(defense_in: number) {
-  //defense in
-  //compare defense in to attack
-  const ratio = stats.attack / defense_in ;
-  console.log("It worked: ", defense_in, ratio);
-  //return ratio
+function attack() {
+  // take in unitID
+  // add dom element to combatStore
+  combatStore.addAttacker(props.id as string);
 }
 
-function focusToggle() {
-  if(store.isCombatPhase && store.setAttacker) {
-    store.attackers.push(stats.attack);
-  } else if (store.isCombatPhase && store.setDefender) {
-    store.defender = stats.defense;
-  } else {
-    focused = !focused;
-    console.log("selected");
-  }
+const combatStore = CombatStore();
+
+/* On Click functions */
+function setDefender() {
+  combatStore.defender = stats.defense;
+}
+
+function setFocused() {
+  focused = !focused;
+  console.log("selected: ", props.id);
+}
+
+function onClickSwitch() {
+  if (store.isCombatPhase && store.setDefender) {
+    setDefender();
+  } else setFocused();
+}
+
+const getStats = computed(() => {
+  return stats;
+});
+
+function setStats(
+  atkMod: number,
+  defMod: number,
+  moveMod: number,
+  erMod: number
+) {
+  stats.attack -= atkMod;
+  stats.defense -= defMod;
+  stats.movement -= moveMod;
+  stats.efficiency_rating -= erMod;
 }
 
 defineExpose({
   counterMove,
   attack,
+  getStats,
+  setStats,
 });
 
 onBeforeMount(() => {

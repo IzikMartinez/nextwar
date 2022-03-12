@@ -1,22 +1,6 @@
 <template>
   <div class="map-section">
-    <button v-if="store.isCombatPhase" @click="moveClick">Movement Phase</button>
-    <button v-if="store.isMovePhase" @click="combatPhaseClick">Combat Phase</button>
-    <template v-if="store.isCombatPhase === true">
-      <button @click="attackerClick">
-        Set attackers
-      </button>
-      <button @click="defenderClick">
-        Set set defenders
-      </button>
-      <button @click="combatClick">
-       Attack
-      </button>
-      <label>Total attack: {{ store.totalAttack }} </label>
-      <label>Defense: {{ store.defender }}</label>
-      <label>Column: {{ store.oddsRatio }}</label>
-      <label>Your losses: {{ result.your_loss}}, Enemy losses: {{result.enemy_loss}}</label>
-    </template>
+    <Topbar />
     <svg class="map" height="1000" width="2000">
       <g v-for="(hex, index) in HexList" :key="index">
         <Hex
@@ -26,20 +10,46 @@
           :y="hex.y_pos"
         ></Hex>
       </g>
-
-      <g v-for="(counter, index) in counters" :key="index">
+      <g v-for="(counter, index) in prcCounters" :key="index">
         <Counter
+          :id="counter.id"
           :class="counter.class"
           :country="counter.faction"
           :unit_name="counter.unit_name"
           :unit_type="counter.unit_type"
           :unit_size="counter.unit_size"
+          :formation_id="counter.formation_id"
+          :x_in="counter.xPos"
+          :y_in="counter.yPos"
           :ref="
             (el) => {
-              counterRefs[index] = el;
+              counterStore.setRef(counter.id, accum);
+              accum++;
+              counterStore.counterRefs.push(el);
             }
           "
-          @click="setCounterIndex(index)"
+          @click="setCounterIndex(counter.id)"
+        ></Counter>
+      </g>
+      <g v-for="(counter, index) in usaCounters" :key="index">
+        <Counter
+          :id="counter.id"
+          :class="counter.class"
+          :country="counter.faction"
+          :unit_name="counter.unit_name"
+          :unit_type="counter.unit_type"
+          :unit_size="counter.unit_size"
+          :formation_id="counter.formation_id"
+          :x_in="counter.xPos"
+          :y_in="counter.yPos"
+          :ref="
+            (el) => {
+              counterStore.setRef(counter.id, accum);
+              accum++;
+              counterStore.counterRefs.push(el);
+            }
+          "
+          @click="setCounterIndex(counter.id)"
         ></Counter>
       </g>
     </svg>
@@ -47,51 +57,26 @@
 </template>
 
 <script setup lang="ts">
-import {onBeforeMount, reactive, ref} from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
-import MakeCounter from "@/types/counter";
+import { CounterStore } from "@/store/counterStore";
+import { CombatStore } from "@/store/combatStore";
+import { UnitCounters } from "@/data/unitCounters";
 import { makeGrid } from "@/scripts/makeGrid";
+
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
+import Topbar from "@/components/Topbar.vue";
 import HexType from "@/types/hexType";
-import {CombatOdds} from "@/scripts/combatOdds";
 
 const store = useCoordStore();
+const counterStore = CounterStore();
+const combatStore = CombatStore();
 const gridMake = makeGrid();
-const counterRefs = ref([]);
 
-const counters = ref<MakeCounter[]>([
-  {
-    class: "counter-img",
-    faction: "PRC",
-    unit_name: "1 MCAB",
-    unit_type: "MCAB",
-    unit_size: "brigade",
-    formation_id: "78GA",
-    special_forces: "no",
-    c_ref: 1,
-  },
-  {
-    class: "counter-img",
-    faction: "PRC",
-    unit_name: "2 MCAB",
-    unit_type: "MCAB",
-    unit_size: "brigade",
-    formation_id: "78GA",
-    special_forces: "no",
-    c_ref: 2,
-  },
-  {
-    class: "counter-img",
-    faction: "USA",
-    unit_name: "1 SBCT",
-    unit_type: "SBCT",
-    unit_size: "brigade",
-    formation_id: "II",
-    special_forces: "no",
-    c_ref: 3,
-  },
-]);
+const counters = UnitCounters();
+const prcCounters = counters.GroupArmy78;
+const usaCounters = counters.I_Infantry;
 
 const HexList = ref<HexType[]>([
   {
@@ -174,63 +159,29 @@ const HexList = ref<HexType[]>([
     x_pos: 3,
     y_pos: 3,
   },
-
 ]);
 
 function callCounterMove(x: number, y: number, terrain: string) {
   //store.counterCoords.x = x / 150;
   //store.counterCoords.y = y / 87;
-  if(store.isMovePhase) {
-    counterRefs.value[store.counterIndex].counterMove(x, y, terrain);
-  } else if(store.isCombatPhase) {
-    counterRefs.value[store.counterIndex].attack(5);
-    // select attackers
-    // select target
-    // compute odds
-    // roll for result
-    // apply losses to units
+  if (store.isMovePhase) {
+    counterStore.counterRefs[store.counterIndex].counterMove(x, y, terrain);
   }
+  // select attackers
+  // select target
+  // compute odds
+  // roll for result
+  // apply losses to units
   return null;
 }
 
-function setCounterIndex(index: number) {
-  store.counterIndex = index;
-}
+let accum = 0;
 
-function moveClick() {
-  store.isMovePhase = true;
-  store.isCombatPhase = false;
-}
-
-function combatPhaseClick() {
-  store.isMovePhase = false;
-  store.isCombatPhase = true;
-  console.log("combat phase");
-  console.log(store.isCombatPhase);
-}
-
-const result = reactive({
-  your_loss: 0,
-  enemy_loss: 0,
-  retreat: false,
-});
-
-function combatClick() {
-  const combatOdds = CombatOdds(store.totalAttack, store.defender);
-  const holder = combatOdds.getResult();
-  result.your_loss = holder.yours;
-  result.enemy_loss = holder.theirs;
-  result.retreat = holder.retreat ?? false;
-}
-
-function attackerClick() {
-  store.setAttacker = true;
-  store.setDefender = false;
-}
-
-function defenderClick() {
-  store.setDefender = true;
-  store.setAttacker = false;
+function setCounterIndex(unitId: string) {
+  store.counterIndex = counterStore.getRefId(unitId);
+  if (store.isCombatPhase && store.setAttacker) {
+    counterStore.counterRefs[store.counterIndex].attack();
+  }
 }
 
 onBeforeMount(() => {

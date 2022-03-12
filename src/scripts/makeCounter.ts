@@ -7,7 +7,6 @@ export function makeCounter(
   unit_type: string
 ) {
   const stats = reactive({
-    unit_id: "1 SBCT",
     attack: 3,
     defense: 3,
     movement: 8,
@@ -129,6 +128,39 @@ export function makeCounter(
         assignStatsAttrs(6, 5, 8, 2, "tracked");
       } else if (unit_type === "LCAB") {
         assignStatsAttrs(3, 4, 6, 2, "wheeled");
+      } switch (formation_id) {
+        case "79ga":
+          attributes.color = "red";
+          break;
+        case "80ga":
+          attributes.color = "green";
+          break;
+        case "78ga":
+          attributes.color = "coral";
+          break;
+        case "III":
+          attributes.color = "yellow";
+          break;
+        case "XXV":
+          attributes.color = "light-blue";
+          break;
+        case "10-mtn":
+          attributes.color = "purple";
+          attributes.special_forces = "mountain";
+          break;
+        case "101-abn":
+          attributes.color = "forest-green";
+          attributes.symbol_color = "white";
+          attributes.special_forces = "paratrooper";
+          break;
+        case "82-abn":
+          attributes.color = "navy";
+          attributes.symbol_color = "white";
+          attributes.special_forces = "paratrooper";
+          break;
+        default:
+          attributes.color = "white";
+          break;
       }
     } else if (country === "ROK") {
       attributes.main_color = "white";
