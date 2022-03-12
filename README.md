@@ -5,7 +5,7 @@ Next war is a hex and counter, strategy wargame played on a tabletop. The game s
 
 For those new to the Next War series, rules can be found on the publisher's (GMT Games) website 
 
-##In progress
+## In progress
 
 Step losses and effects of damage 
 
