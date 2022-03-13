@@ -11,7 +11,6 @@ export const CounterStore = defineStore("counterMain", {
   actions: {
     setRef(unitID: string, index: number) {
       this.counterRefsMap.set(unitID, index);
-      console.log(unitID, index);
       //this.refIndex = this.refIndex + 1;
     },
     getRefId(unitID: string) {

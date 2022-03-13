@@ -92,7 +92,7 @@ const movementBackgroundColor = computed(() => {
   width: 100%;
   text-align: center;
   font-weight: 500;
-  font-size: 12em;
+  font-size: 10em;
   fill: var(--text-color);
 }
 .symbol-color {

@@ -287,11 +287,11 @@
             :class="attributes.stats_color"
             transform="translate(81.62 538.96)"
           >
-            {{ stats.attack }}
+            {{ stats.attackVal }}
           </text>
         </g>
-        <Stats :stat_value="stats.defense" stat_type="defense"></Stats>
-        <Stats :stat_value="stats.movement" stat_type="movement" :movement_type="attributes.movement_type"></Stats>
+        <Stats :stat_value="stats.defenseVal" stat_type="defense"></Stats>
+        <Stats :stat_value="stats.movementVal" stat_type="movement" :movement_type="attributes.movement_type"></Stats>
 
         <g id="ER" data-name="ER" transform="translate(10 10)">
           <polygon
@@ -333,7 +333,7 @@ import { useCoordStore } from "@/store/coordinateStore";
 import { makeCounter } from "@/scripts/makeCounter";
 import { hexAdjacency } from "@/scripts/hexAdjacency";
 import Stats from "@/components/fragments/StatsMain.vue";
-import {CombatStore} from "@/store/combatStore";
+import { CombatStore } from "@/store/combatStore";
 
 const store = useCoordStore();
 
@@ -347,6 +347,7 @@ const props = defineProps({
   special_forces: String,
   x_in: Number,
   y_in: Number,
+  flag: String,
 });
 
 const counterMaker = makeCounter(
@@ -383,46 +384,13 @@ const computedY = computed(() => {
   return coordinates.y * 174 + 35 + odd();
 });
 
-function TerrainCost(terrain: string) {
-  if (terrain === "clear") {
-    return 1;
-  } else if (terrain === "rough") {
-    return 2;
-  } else if (terrain === "mountain") {
-    return 4;
-  } else {
-    return 3;
-  }
-}
 
-
-const counterMove = (x: number, y: number, terrain: string) => {
-  const adjacency = hexAdjacency(coordinates.x, coordinates.y);
-
-  if (stats.movement - TerrainCost(terrain) < 0) {
-    console.log("Out of movement points");
-  } else if (focused && adjacency.isAdjacent(x, y)) {
-    coordinates.x = x;
-    coordinates.y = y;
-    stats.movement -= TerrainCost(terrain);
-  } else {
-    console.log("Out of range");
-  }
-  focused = false;
-  console.log(coordinates.x, coordinates.y);
-};
-
-function attack() {
-  // take in unitID
-  // add dom element to combatStore
-  combatStore.addAttacker(props.id as string);
-}
 
 const combatStore = CombatStore();
 
 /* On Click functions */
 function setDefender() {
-  combatStore.defender = stats.defense;
+  combatStore.addDefender(props.id as string);
 }
 
 function setFocused() {
@@ -440,16 +408,56 @@ const getStats = computed(() => {
   return stats;
 });
 
+const getFlag = computed( () => {
+  return props.flag;
+})
+
+/* Export function */
+
 function setStats(
   atkMod: number,
   defMod: number,
   moveMod: number,
   erMod: number
 ) {
-  stats.attack -= atkMod;
-  stats.defense -= defMod;
-  stats.movement -= moveMod;
+  stats.attackVal -= atkMod;
+  stats.defenseVal -= defMod;
+  stats.movementVal -= moveMod;
   stats.efficiency_rating -= erMod;
+}
+
+function TerrainCost(terrain: string) {
+  if (terrain === "clear") {
+    return 1;
+  } else if (terrain === "rough") {
+    return 2;
+  } else if (terrain === "mountain") {
+    return 4;
+  } else {
+    return 3;
+  }
+}
+
+const counterMove = (x: number, y: number, terrain: string) => {
+  const adjacency = hexAdjacency(coordinates.x, coordinates.y);
+
+  if (stats.movementVal - TerrainCost(terrain) < 0) {
+    console.log("Out of movementVal points");
+  } else if (focused && adjacency.isAdjacent(x, y)) {
+    coordinates.x = x;
+    coordinates.y = y;
+    stats.movementVal -= TerrainCost(terrain);
+  } else {
+    console.log("Out of range");
+  }
+  focused = false;
+  console.log(coordinates.x, coordinates.y);
+};
+
+function attack() {
+  // take in unitID
+  // add dom element to combatStore
+  combatStore.addAttacker(props.id as string);
 }
 
 defineExpose({
@@ -582,7 +590,6 @@ onBeforeMount(() => {
 .national-symbol {
   @include white-fill;
 }
-
 
 .black {
   fill: #000000;

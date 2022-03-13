@@ -7,8 +7,8 @@
     <button @click="attackerClick">Set attackers</button>
     <button @click="defenderClick">Set set defenders</button>
     <button @click="combatClick">Attack</button>
-    <label>Total attack: {{ store.totalAttack }} </label>
-    <label>Defense: {{ store.defender }}</label>
+    <label>Total attack: {{ combatStore.totalAttack }} </label>
+    <label>Defense: {{ combatStore.totalDefense }}</label>
     <label>Column: {{ store.oddsRatio }}</label>
     <label
       >Your losses: {{ result.your_loss }}, Enemy losses:
@@ -21,8 +21,10 @@
 import { useCoordStore } from "@/store/coordinateStore";
 import { reactive } from "vue";
 import { CombatOdds } from "@/scripts/combatOdds";
+import {CombatStore} from "@/store/combatStore";
 
 const store = useCoordStore();
+const combatStore = CombatStore();
 
 function moveClick() {
   store.isMovePhase = true;

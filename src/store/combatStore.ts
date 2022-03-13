@@ -1,17 +1,24 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { CounterStore } from "@/store/counterStore";
+import {defineStore} from "pinia";
+import {ref} from "vue";
+import {CounterStore} from "@/store/counterStore";
 
 export const CombatStore = defineStore("combatMain", {
   state: () => ({
     attackers: ref([]),
-    defender: 0,
+    defender: ref(),
     attackerIndex: 0,
   }),
   getters: {
     totalAttack: (state) => {
-      return state.defender;
-    }
+      let total = 0;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      state.attackers.forEach(element => total += element.getStats.attackVal);
+      return total;
+    },
+    totalDefense: (state) => {
+      return state.defender.getStats.defenseVal;
+    },
   },
   actions: {
     addAttacker(unitID: string) {
@@ -19,10 +26,8 @@ export const CombatStore = defineStore("combatMain", {
       this.attackers.push(counterStore.getRef(unitID));
     },
     addDefender(unitID: string) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const defenderCounter = CounterStore().getRef(unitID).getStats;
-      this.defender = defenderCounter.defense;
+      const counterStore = CounterStore();
+      this.defender = counterStore.getRef(unitID);
     },
     increment() {
       this.attackerIndex++;

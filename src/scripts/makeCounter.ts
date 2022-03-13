@@ -7,9 +7,9 @@ export function makeCounter(
   unit_type: string
 ) {
   const stats = reactive({
-    attack: 3,
-    defense: 3,
-    movement: 8,
+    attackVal: 3,
+    defenseVal: 3,
+    movementVal: 8,
     efficiency_rating: 6,
     stacking_value: 2,
   });
@@ -35,9 +35,9 @@ export function makeCounter(
     movement: number,
     stacking: number
   ) {
-    stats.attack = attack;
-    stats.defense = defense;
-    stats.movement = movement;
+    stats.attackVal = attack;
+    stats.defenseVal = defense;
+    stats.movementVal = movement;
     stats.stacking_value = stacking;
   }
 
