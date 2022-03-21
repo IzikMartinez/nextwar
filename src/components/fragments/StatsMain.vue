@@ -55,13 +55,13 @@ const textColor = computed(() => {
 });
 
 const computedX = computed(() => {
-  if ((props.stat_type as string) == "defense") return 255;
-  else if ((props.stat_type as string) === "movement") return 443;
+  if ((props.stat_type as string) == "defense") return 265;
+  else if ((props.stat_type as string) === "movement") return 450;
   else return 100;
 });
 
 const computedY = computed(() => {
-  return 550;
+  return 541;
 });
 
 const movementBackgroundColor = computed(() => {
@@ -87,7 +87,7 @@ const movementBackgroundColor = computed(() => {
   @include ibm;
   --text-color: #fff;
   --x: 250;
-  --y: 545;
+  --y: 555;
   transform: matrix(1, 0, 0, 1, var(--x), var(--y));
   width: 100%;
   text-align: center;

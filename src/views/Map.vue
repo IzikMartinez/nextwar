@@ -57,6 +57,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { onBeforeMount, ref } from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
 import { CounterStore } from "@/store/counterStore";

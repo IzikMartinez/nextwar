@@ -17,6 +17,7 @@ export function UnitCounters() {
       faction: prcFaction,
       unit_size: brigade,
       formation_id: "78ga",
+      flag: "",
     },
     {
       id: "prc_78ga_78hcab",
@@ -28,6 +29,7 @@ export function UnitCounters() {
       unit_size: brigade,
       faction: prcFaction,
       formation_id: "78ga",
+      flag: "",
     },
     {
       id: "prc_78ga_202hcab",
@@ -39,6 +41,7 @@ export function UnitCounters() {
       faction: prcFaction,
       unit_size: brigade,
       formation_id: "78ga",
+      flag: "",
     },/*
     {
       id: "prc_78ga_204hcab",
@@ -88,6 +91,7 @@ export function UnitCounters() {
       unit_size: brigade,
       faction: usaFaction,
       formation_id: Iformatiion,
+      flag: "",
     },
     {
       id: "USA_1st_2ABCT",
@@ -99,6 +103,7 @@ export function UnitCounters() {
       unit_size: brigade,
       faction: usaFaction,
       formation_id: Iformatiion,
+      flag: "",
     },
   ]);
 

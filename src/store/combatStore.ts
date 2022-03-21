@@ -17,13 +17,18 @@ export const CombatStore = defineStore("combatMain", {
       return total;
     },
     totalDefense: (state) => {
-      return state.defender.getStats.defenseVal;
+      if (state.defender.getStats.defenseVal)
+        return state.defender.getStats.defenseVal;
+      else return 1; // this number will be the denominator, and we cannot divide by zero
     },
   },
   actions: {
     addAttacker(unitID: string) {
       const counterStore = CounterStore();
       this.attackers.push(counterStore.getRef(unitID));
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      counterStore.counterRefs.forEach( element => console.log(element.getFlag))
     },
     addDefender(unitID: string) {
       const counterStore = CounterStore();

@@ -21,7 +21,7 @@
 import { useCoordStore } from "@/store/coordinateStore";
 import { reactive } from "vue";
 import { CombatOdds } from "@/scripts/combatOdds";
-import {CombatStore} from "@/store/combatStore";
+import { CombatStore } from "@/store/combatStore";
 
 const store = useCoordStore();
 const combatStore = CombatStore();

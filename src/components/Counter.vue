@@ -327,7 +327,7 @@ import {
   defineExpose,
   defineProps,
   onBeforeMount,
-  reactive,
+  reactive, ref,
 } from "vue";
 import { useCoordStore } from "@/store/coordinateStore";
 import { makeCounter } from "@/scripts/makeCounter";
@@ -358,8 +358,8 @@ const counterMaker = makeCounter(
 );
 
 const stats = counterMaker.stats;
-
 const attributes = counterMaker.attributes;
+let flag = (props.flag as string) ?? "";
 
 const coordinates = reactive({
   x: props.x_in ?? 1,
@@ -408,9 +408,7 @@ const getStats = computed(() => {
   return stats;
 });
 
-const getFlag = computed( () => {
-  return props.flag;
-})
+
 
 /* Export function */
 
@@ -457,14 +455,21 @@ const counterMove = (x: number, y: number, terrain: string) => {
 function attack() {
   // take in unitID
   // add dom element to combatStore
+  console.log("Added ", props.id, " to attack ref");
+  flag = "attacker";
   combatStore.addAttacker(props.id as string);
 }
+
+const getFlag = computed(() => {
+  return flag;
+});
 
 defineExpose({
   counterMove,
   attack,
   getStats,
   setStats,
+  getFlag,
 });
 
 onBeforeMount(() => {
