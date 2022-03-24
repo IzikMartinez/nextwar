@@ -1,6 +1,6 @@
 <template>
   <div class="game-select">
-    <h1>Next War</h1>
+    <h1 class="font-extrabold text-white w-screen bg-primary shadow-2xl">Next War</h1>
     <button
       class="inpak"
       @click="$router.push({ name: 'Map', params: { id: 1 } })"
@@ -23,67 +23,11 @@
     />
   </div>
 
-  <div class="grid-container">
-    <counter
-      class="counter"
-      country="ROK"
-      unit_name="1 SBCT"
-      unit_type="SBCT"
-      unit_size="brigade"
-      formation_id="XXV"
-    ></counter>
-
-    <counter
-      class="counter"
-      country="PRC"
-      unit_name="1 LCAB"
-      unit_type="LCAB"
-      unit_size="brigade"
-    ></counter>
-    <counter
-      class="counter"
-      country="PRC"
-      unit_name="2 MCAB"
-      unit_type="MCAB"
-      unit_size="brigade"
-    ></counter>
-    <counter
-      class="counter"
-      country="PRC"
-      unit_name="3 HCAB"
-      unit_type="HCAB"
-      unit_size="brigade"
-      formation_id="I"
-    ></counter>
-    <counter
-      class="counter"
-      country="DPRK"
-      unit_name="1 BCT"
-      unit_size="brigade"
-      formation_id="10-mtn"
-    ></counter>
-    <counter
-      class="counter"
-      country="USA"
-      unit_name="2 BCT"
-      unit_size="brigade"
-      formation_id="101-abn"
-    ></counter>
-    <counter
-      class="counter"
-      country="USA"
-      unit_name="3 BCT"
-      unit_size="brigade"
-      formation_id="82-abn"
-    ></counter>
-  </div>
 </template>
 
 <script>
-import counter from "../components/Counter";
 export default {
   name: "Select-Game",
-  components: { counter },
 };
 </script>
 
@@ -127,15 +71,15 @@ $hi: calc(1366px / 4);
   }
   .korea {
     @include game-btn;
-    background: url("../assets/Taiwan.svg");
+    background: url("../assets/Korea.svg");
   }
   .poland {
     @include game-btn;
-    background: url("../assets/Taiwan.svg");
+    background: url("../assets/Poland.svg");
   }
   .vietnam {
     @include game-btn;
-    background: url("../assets/Taiwan.svg");
+    background: url("../assets/Vietnam.svg");
   }
 }
 

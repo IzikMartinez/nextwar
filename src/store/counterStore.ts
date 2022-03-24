@@ -18,6 +18,7 @@ export const CounterStore = defineStore("counterMain", {
     },
     getRef(unitID: string): never {
       const refID = this.getRefId(unitID);
+      // @ts-ignore
       return this.counterRefs[refID];
     },
   },

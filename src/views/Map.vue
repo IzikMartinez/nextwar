@@ -67,7 +67,7 @@ import { makeGrid } from "@/scripts/makeGrid";
 
 import Counter from "../components/Counter.vue";
 import Hex from "../components/Hex.vue";
-import Topbar from "@/components/Topbar.vue";
+import Topbar from "@/components/phase-bar.vue";
 import HexType from "@/types/hexType";
 
 const store = useCoordStore();

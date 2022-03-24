@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .sidebar-icon {
+        @apply relative flex items-center justify-center h-16 w-16 mt-4 mb-4 mx-auto
+        shadow-lg bg-gray-500 text-yellow-200 rounded-xl
+        hover:bg-secondary hover:text-black hover:rounded-3xl hover:font-bold
+        transition-all duration-300 ease-linear
+    }
+
+    .sidebar-icon-low {
+        @apply relative flex items-center justify-center h-16 w-16 mt-6 mb-4 mx-auto
+        shadow-lg bg-gray-500 text-yellow-200 rounded-xl
+        hover:bg-secondary hover:text-black hover:rounded-3xl hover:font-bold
+        transition-all duration-300 ease-linear
+    }
+}
